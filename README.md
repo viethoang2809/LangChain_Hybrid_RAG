@@ -47,11 +47,11 @@ streamlit run app/main.py
 (Nếu không tự mở, copy link này dán vào trình duyệt)
 
 ## 🔐 Set up evironment (.env)
-OPENAI_API_KEY=sk-xxxx                     # 🔑 Key của bạn lấy từ https://platform.openai.com/api-keys
-NEO4J_URI=neo4j+s://04c8805a.databases.neo4j.io   # 🌐 URI kết nối Neo4j Aura
-NEO4J_USER=neo4j                           # 👤 Tên đăng nhập Neo4j
-NEO4J_PASSWORD=your_password               # 🔒 Mật khẩu Neo4j
-VECTOR_STORE_PATH=.vector_store/text_embeddings   # 📁 Thư mục chứa FAISS vector data
+    - OPENAI_API_KEY=sk-xxxx                     # 🔑 Key của bạn lấy từ  https://platform.openai.com/api-keys
+    - NEO4J_URI=neo4j+s://04c8805a.databases.neo4j.io   # 🌐 URI kết nối Neo4j Aura
+    - NEO4J_USER=neo4j                           # 👤 Tên đăng nhập Neo4j
+    - NEO4J_PASSWORD=your_password               # 🔒 Mật khẩu Neo4j
+    - VECTOR_STORE_PATH=.vector_store/text_embeddings   # 📁 Thư mục chứa FAISS vector data
 
 
 ## 🧾 Thông tin tác giả
