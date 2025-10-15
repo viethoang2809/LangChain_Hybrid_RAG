@@ -24,7 +24,9 @@ def get_var(key, default=None, section="general"):
         return os.getenv(key, default)
 OPENAI_MODEL = get_var("OPENAI_MODEL", "gpt-4o-mini")
 ANSWER_RULE_PATH = get_var("ANSWER_RULE_PATH", "app/prompts/answer_synthesis.txt")
-
+OPENAI_API_KEY = get_var("OPENAI_API_KEY")
+os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 load_dotenv()
 
