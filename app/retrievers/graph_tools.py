@@ -12,6 +12,19 @@ def get_secret(key, section="general"):
     except Exception:
         return os.getenv(key)
 
+def get_var(key: str, default=None, section="general"):
+    try:
+        # ưu tiên đọc từ secrets trên Streamlit Cloud
+        return st.secrets[section].get(key, default)
+    except Exception:
+        # fallback về .env khi chạy local
+        return os.getenv(key, default)
+    
+NEO4J_URI = get_var("NEO4J_URI")
+NEO4J_USER = get_var("NEO4J_USER")
+NEO4J_PASSWORD = get_var("NEO4J_PASSWORD")
+OPENAI_MODEL = get_var("OPENAI_MODEL", "gpt-4o-mini")
+
 # ========= CẤU HÌNH ==========
 NEO4J_URI = os.getenv("NEO4J_URI")
 NEO4J_USER = os.getenv("NEO4J_USER")

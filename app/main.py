@@ -17,11 +17,14 @@ from openai import OpenAI
 from app.retrievers.hybrid_retriever import HybridRetriever
 from app.retrievers.vector_tools import VectorClient, Passage
 
-def get_secret(key, section="general"):
+def get_var(key, default=None, section="general"):
     try:
-        return st.secrets[section][key]
+        return st.secrets[section].get(key, default)
     except Exception:
-        return os.getenv(key)
+        return os.getenv(key, default)
+OPENAI_MODEL = get_var("OPENAI_MODEL", "gpt-4o-mini")
+ANSWER_RULE_PATH = get_var("ANSWER_RULE_PATH", "app/prompts/answer_synthesis.txt")
+
 
 load_dotenv()
 
