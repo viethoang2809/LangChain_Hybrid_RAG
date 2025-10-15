@@ -104,3 +104,12 @@ if __name__ == "__main__":
 
     print("\n===== KẾT QUẢ TRẢ VỀ =====")
     print(result)
+
+
+
+# Test bug
+print("========== DEBUG NEO4J CONFIG ==========")
+print("NEO4J_URI:", repr(NEO4J_URI))
+print("NEO4J_USER:", repr(NEO4J_USER))
+print("NEO4J_PASSWORD:", "SET" if NEO4J_PASSWORD else None)
+print("=======================================")
