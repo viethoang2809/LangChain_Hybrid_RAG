@@ -12,6 +12,10 @@ Dự án **LangChain Hybrid RAG** giúp xây dựng hệ thống hỏi đáp th�
 
 > “Tìm nhà 5 tầng sổ đỏ chính chủ đầy đủ nội thất tại Thanh Xuân”
 
+> “Tìm nhà hướng Nam sổ đỏ chính chủ khoảng 40m2 tại Thanh Xuân”
+
+> “Tìm nhà từ 40m2 - 60m2 gần đại học bách khoa, nội thất đầy đủ”
+
 và hệ thống sẽ:
 1. Sinh ra truy vấn **Cypher** tương ứng  
 2. Thực thi trên Neo4j  
@@ -21,21 +25,18 @@ và hệ thống sẽ:
 # 💻 Set up and run
 
 1. Clone repository từ GitHub
-git clone https://github.com/VietHoangg03/LangChain_Hybrid_RAG.git
-cd LangChain_Hybrid_RAG
+    - git clone https://github.com/VietHoangg03/LangChain_Hybrid_RAG.git
+    - cd LangChain_Hybrid_RAG
 
 2. Tạo môi trường ảo (virtual environment)
-python3 -m venv venv
+    - python3 -m venv venv
 
 3. Kích hoạt môi trường ảo
-👉 Dành cho macOS / Linux:
-source venv/bin/activate
-
-👉 Dành cho Windows:
-venv\Scripts\activate
+    - MacOS / Linux: source venv/bin/activate
+    - Windows: venv\Scripts\activate
 
 4. Cài đặt các thư viện cần thiết
-pip install -r requirements.txt
+    - pip install -r requirements.txt
 
 5. Tạo file .env ở thư mục gốc (để lưu API key và config)
 
@@ -47,11 +48,16 @@ streamlit run app/main.py
 (Nếu không tự mở, copy link này dán vào trình duyệt)
 
 ## 🔐 Set up evironment (.env)
-    - OPENAI_API_KEY=sk-xxxx                     # 🔑 Key của bạn lấy từ  https://platform.openai.com/api-keys
-    - NEO4J_URI=neo4j+s://04c8805a.databases.neo4j.io   # 🌐 URI kết nối Neo4j Aura
-    - NEO4J_USER=neo4j                           # 👤 Tên đăng nhập Neo4j
-    - NEO4J_PASSWORD=your_password               # 🔒 Mật khẩu Neo4j
-    - VECTOR_STORE_PATH=.vector_store/text_embeddings   # 📁 Thư mục chứa FAISS vector data
+- OPENAI_API_KEY=sk-xxxx                     
+ 🔑 Key của bạn lấy từ  https://platform.openai.com/api-keys
+- NEO4J_URI=neo4j+s://04c8805a.databases.neo4j.io   
+ 🌐 URI kết nối Neo4j Aura
+- NEO4J_USER=neo4j                           
+ 👤 Tên đăng nhập Neo4j
+- NEO4J_PASSWORD=your_password               
+ 🔒 Mật khẩu Neo4j
+- VECTOR_STORE_PATH=.vector_store/text_embeddings   
+ 📁 Thư mục chứa FAISS vector data
 
 
 ## 🧾 Thông tin tác giả
