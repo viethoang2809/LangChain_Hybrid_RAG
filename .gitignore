@@ -1,75 +1,58 @@
-# ====== Python ======
+# ====== Python cache ======
 __pycache__/
 *.py[cod]
 *$py.class
-*.pyo
-*.pyd
-*.so
-*.egg
-*.egg-info/
-dist/
-build/
-.eggs/
-venv/
-env/
-ENV/
-.venv/
-.pytest_cache/
-.ipynb_checkpoints/
 
-# ====== OS Files ======
+# ====== Virtual environments ======
+venv/
+.envrc
+.env.local
+ENV/
+env/
+.venv/
+
+# ====== System files ======
 .DS_Store
 Thumbs.db
 
-# ====== Environment & Secrets ======
+# ====== Secrets & configs ======
 .env
 .env.*
-*.env
-secrets.toml
 .streamlit/secrets.toml
 
-# ====== Cache & Logs ======
-*.log
-logs/
-cache/
-.tmp/
-*.tmp
-*.bak
-
-# ====== IDE Settings ======
+# ====== IDE configs ======
 .vscode/
 .idea/
 *.iml
 
-# ====== Data & Models ======
-data/
-datasets/
-*.csv
-*.xlsx
-*.xls
-*.json
-*.parquet
-*.db
-*.sqlite3
-*.pkl
-*.faiss
-*.bin
-*.ckpt
+# ====== Logs, temp, checkpoints ======
+*.log
+logs/
+*.tmp
+*.bak
+.pytest_cache/
+.ipynb_checkpoints/
 
-# ====== Vector Stores / Embeddings ======
-.vector_store/
-chroma/
-faiss_index/
-index/
-embeddings/
-
-# ====== Project-specific (LangChain / Neo4j) ======
+# ====== Neo4j / backups ======
 .neo4j/
 __neo4j_backup__/
-graph_data/
 graph_dump/
-graphdb/
 
-# ====== Streamlit ======
-.streamlit/config.toml
-# (chỉ giữ file cấu hình cục bộ, secrets.toml đã ignore ở trên)
+# ====== Optional: nếu bạn có dữ liệu model lớn hơn 50MB thì không nên commit ======
+# (Vì GitHub không cho push file >100MB)
+# Nếu bạn có file nặng (vd .pkl, .faiss, .bin lớn) thì dùng Git LFS nhé.
+
+# ====== GIỮ LẠI DỮ LIỆU cho embedding & deploy ======
+# Không ignore các thư mục này:
+# ✅ Cho phép commit vector store, csv, json, data, faiss
+!data/
+!datasets/
+!embeddings/
+!index/
+!vector_store/
+!faiss_index/
+!*.csv
+!*.json
+!*.faiss
+!*.pkl
+!*.bin
