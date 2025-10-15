@@ -17,6 +17,9 @@ from openai import OpenAI
 from app.retrievers.hybrid_retriever import HybridRetriever
 from app.retrievers.vector_tools import VectorClient, Passage
 
+# Cấu hình
+load_dotenv()
+
 def get_var(key, default=None, section="general"):
     try:
         return st.secrets[section].get(key, default)
@@ -27,11 +30,6 @@ ANSWER_RULE_PATH = get_var("ANSWER_RULE_PATH", "app/prompts/answer_synthesis.txt
 OPENAI_API_KEY = get_var("OPENAI_API_KEY")
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 client = OpenAI(api_key=OPENAI_API_KEY)
-
-load_dotenv()
-
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-ANSWER_RULE_PATH = os.getenv("ANSWER_RULE_PATH", "app/prompts/answer_synthesis.txt")
 
 
 # ===============================

@@ -8,6 +8,9 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.docstore.document import Document
 
+# Cấu hình
+load_dotenv()
+
 def get_var(key, default=None, section="general"):
     try:
         return st.secrets[section].get(key, default)
@@ -16,12 +19,6 @@ def get_var(key, default=None, section="general"):
     
 EMBED_MODEL = get_var("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 VECTOR_STORE_PATH = get_var("VECTOR_STORE_PATH", ".vector_store/text_embeddings")
-
-
-load_dotenv()
-
-VECTOR_STORE_PATH = os.getenv("VECTOR_STORE_PATH", ".vector_store/text_embeddings")
-EMBED_MODEL = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 
 @dataclass
 class Passage:
