@@ -18,7 +18,7 @@ và hệ thống sẽ:
 3. Kết hợp với dữ liệu embedding để tạo phản hồi tự nhiên.
 
 
-# 💻 CÀI ĐẶT VÀ CHẠY LOCAL
+# 💻 Set up and run
 
 1. Clone repository từ GitHub
 git clone https://github.com/VietHoangg03/LangChain_Hybrid_RAG.git
@@ -46,7 +46,7 @@ streamlit run app/main.py
 👉 http://localhost:8501
 (Nếu không tự mở, copy link này dán vào trình duyệt)
 
-## 🔐 ENVIRONMENT CONFIG (.env)
+## 🔐 Set up evironment (.env)
 OPENAI_API_KEY=sk-xxxx                     # 🔑 Key của bạn lấy từ https://platform.openai.com/api-keys
 NEO4J_URI=neo4j+s://04c8805a.databases.neo4j.io   # 🌐 URI kết nối Neo4j Aura
 NEO4J_USER=neo4j                           # 👤 Tên đăng nhập Neo4j
@@ -54,7 +54,7 @@ NEO4J_PASSWORD=your_password               # 🔒 Mật khẩu Neo4j
 VECTOR_STORE_PATH=.vector_store/text_embeddings   # 📁 Thư mục chứa FAISS vector data
 
 
-## 🧾 THÔNG TIN TÁC GIẢ
+## 🧾 Thông tin tác giả
 👤 Tác giả: Viet Hoang
 
 ## 📂 Dự án: 
