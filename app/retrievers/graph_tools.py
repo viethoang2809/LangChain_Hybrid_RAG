@@ -3,16 +3,12 @@ from neo4j import GraphDatabase
 from openai import OpenAI
 from dotenv import load_dotenv
 from app.retrievers.nl2cypher_retriever import NL2CypherRetriever
+import streamlit as st
 
 
 # Cấu hình
 load_dotenv()
 
-def get_secret(key, section="general"):
-    try:
-        return st.secrets[section][key]
-    except Exception:
-        return os.getenv(key)
 
 def get_var(key: str, default=None, section="general"):
     try:

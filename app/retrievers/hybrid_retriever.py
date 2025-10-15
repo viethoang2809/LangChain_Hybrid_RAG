@@ -9,6 +9,7 @@ from app.retrievers.vector_tools import VectorClient, Passage
 from openai import OpenAI
 
 
+
 class HybridRetriever:
     """
     Retriever kết hợp giữa:
