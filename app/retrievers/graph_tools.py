@@ -22,10 +22,10 @@ def get_var(key: str, default=None, section="general"):
         # fallback về .env khi chạy local
         return os.getenv(key, default)
     
-NEO4J_URI = os.getenv("NEO4J_URI")
-NEO4J_USER = os.getenv("NEO4J_USER")
-NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+NEO4J_URI = get_var("NEO4J_URI")
+NEO4J_USER = get_var("NEO4J_USER")
+NEO4J_PASSWORD = get_var("NEO4J_PASSWORD")
+OPENAI_MODEL = get_var("OPENAI_MODEL", "gpt-4o-mini")
 
 
 
