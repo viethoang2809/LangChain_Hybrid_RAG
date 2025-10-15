@@ -1,0 +1,75 @@
+# ====== Python ======
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+env/
+ENV/
+.venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ====== OS Files ======
+.DS_Store
+Thumbs.db
+
+# ====== Environment & Secrets ======
+.env
+.env.*
+*.env
+secrets.toml
+.streamlit/secrets.toml
+
+# ====== Cache & Logs ======
+*.log
+logs/
+cache/
+.tmp/
+*.tmp
+*.bak
+
+# ====== IDE Settings ======
+.vscode/
+.idea/
+*.iml
+
+# ====== Data & Models ======
+data/
+datasets/
+*.csv
+*.xlsx
+*.xls
+*.json
+*.parquet
+*.db
+*.sqlite3
+*.pkl
+*.faiss
+*.bin
+*.ckpt
+
+# ====== Vector Stores / Embeddings ======
+.vector_store/
+chroma/
+faiss_index/
+index/
+embeddings/
+
+# ====== Project-specific (LangChain / Neo4j) ======
+.neo4j/
+__neo4j_backup__/
+graph_data/
+graph_dump/
+graphdb/
+
+# ====== Streamlit ======
+.streamlit/config.toml
+# (chỉ giữ file cấu hình cục bộ, secrets.toml đã ignore ở trên)

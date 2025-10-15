@@ -1,0 +1,29 @@
+# === Core ===
+python-dotenv>=1.0.1
+pandas>=2.2.2
+numpy>=1.26.4
+tiktoken>=0.7.0
+
+# === LangChain ecosystem ===
+openai>=1.40.0
+langchain>=0.2.12
+langchain-community>=0.2.10
+langchain-openai>=0.1.23
+langgraph>=0.2.16
+
+# === VectorDB ===
+faiss-cpu>=1.8.0
+chromadb>=0.5.5
+rank-bm25>=0.2.2
+
+# === Neo4j ===
+neo4j>=5.22.0
+py2neo==2021.2.4
+
+# === Web UI ===
+streamlit>=1.36.0
+
+# === Utilities ===
+requests
+urllib3
+pydantic>=2.8.2
