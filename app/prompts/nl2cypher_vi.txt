@@ -16,13 +16,15 @@ Không được trả lời thêm bất kỳ giải thích nào ngoài đoạn m
 
 ```
 (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(:District)-[:HAS_PROPERTY]->(:Property)
+(:Property)-[:HAS_PROPERTY_TYPE]->(:PropertyType)
+(:Property)-[:HAS_DESIGN]->(:HouseDesign)
+(:Property)-[:HAS_AMENITY]->(:Amenity)
+(:Property)-[:HAS_DIRECTION]->(:Direction)
+(:Property)-[:HAS_LEGAL_STATUS]->(:LegalStatus)
 (:Property)-[:HAS_PRICE]->(:PriceVND)
 (:Property)-[:HAS_AREA]->(:Area)
-(:Property)-[:HAS_PROPERTY_TYPE]->(:PropertyType)
-(:Property)-[:HAS_LEGAL_STATUS]->(:LegalStatus)
-(:Property)-[:HAS_DIRECTION]->(:Direction)
-(:Property)-[:HAS_AMENITY]->(:Amenity)
 (:Property)-[:LOCATED_AT]->(:Address)
+(:Property)-[:NEAR_FACILITY]->(:Facility)
 (:Property)-[:HAS_CONTACT]->(:Contact)
 (:Contact)-[:HAS_CONTACT_NAME]->(:ContactName)
 (:Contact)-[:HAS_CONTACT_PHONE]->(:ContactPhone)
@@ -30,32 +32,33 @@ Không được trả lời thêm bất kỳ giải thích nào ngoài đoạn m
 
 ---
 ## QUY TẮC THỨ TỰ MATCH TRƯỚC WHERE
-
-Đây là phần cực kỳ quan trọng.  
+Đây là phần cực kỳ quan trọng
 Nếu câu hỏi có nhắc đến thông tin nào, **phải MATCH node tương ứng trước khi dùng trong WHERE**.
 
 | Nhóm thông tin | MATCH bắt buộc trước WHERE | Ví dụ điều kiện WHERE tương ứng |
 |----------------|-----------------------------|----------------------------------|
 | Khu vực / Quận huyện | `MATCH (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)` | `WHERE toLower(d.name) CONTAINS "thanh xuân"` |
 | Loại nhà (nhà, đất, chung cư, biệt thự, …) | `MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)` | `WHERE toLower(ptype.name) CONTAINS "nhà"` |
+| Thiết kế nhà (3 tầng, 5 tầng, …) | `MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)` | `WHERE toLower(design.name) CONTAINS "5 tầng"` |
 | Diện tích | `MATCH (p)-[:HAS_AREA]->(area:Area)` | `WHERE toFloat(area.value) BETWEEN 40 AND 60` |
 | Giá bán | `MATCH (p)-[:HAS_PRICE]->(price:PriceVND)` | `WHERE toFloat(price.value) <= 5` |
 | Pháp lý (sổ đỏ, chính chủ, …) | `MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)` | `WHERE toLower(ls.name) CONTAINS "sổ đỏ"` |
 | Hướng nhà | `MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)` | `WHERE toLower(dir.name) CONTAINS "tây"` |
-| Thiết kế nhà | `MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)` | `WHERE toLower(design.name) CONTAINS "5 tầng"` |
 | Tiện ích nội thất | `MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)` | `WHERE toLower(amen.name) CONTAINS "nội thất"` |
 | Gần tiện ích (chợ, trường, đại học, …) | `MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)` | `WHERE toLower(fac.name) CONTAINS "đại học bách khoa"` |
 | Địa chỉ cụ thể | `MATCH (p)-[:LOCATED_AT]->(addr:Address)` | `WHERE toLower(addr.name) CONTAINS "phố vọng"` |
-| Liên hệ / chủ nhà | `MATCH (p)-[:HAS_CONTACT]->(c:Contact)` | `MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)` → dùng khi truy vấn chi tiết căn (`id = ...`) |
+| Liên hệ / chủ nhà | `MATCH (p)-[:HAS_CONTACT]->(c:Contact)` và `MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)` | Dùng khi truy vấn chi tiết căn (`id = ...`) |
 
 ### Nguyên tắc:
 - Không bao giờ được dùng WHERE cho biến chưa MATCH.  
 - Nếu người dùng hỏi nhiều điều kiện (vd: diện tích + giá + hướng) → MATCH hết trước, rồi WHERE kết hợp.  
 - Ví dụ đúng:
+    ```
     MATCH (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
     MATCH (p)-[:HAS_AREA]->(area:Area)
     MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
     WHERE toFloat(area.value) >= 40 AND toFloat(price.value) <= 6
+    ```
 - Các `OPTIONAL MATCH` khác chỉ thêm sau phần WHERE.
 
 ---

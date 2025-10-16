@@ -7,9 +7,8 @@ from openai import OpenAI
 from app.retrievers.vector_tools import VectorClient, Passage
 
 
-# ======================
-# 🔹 Load rule tổng hợp câu trả lời
-# ======================
+
+# Load rule tổng hợp câu trả lời answer_synthesis.txt
 def load_answer_rule(path: str = "app/prompts/answer_synthesis.txt") -> str:
     if not os.path.exists(path):
         raise FileNotFoundError(f"❌ Không tìm thấy rule tổng hợp câu trả lời: {path}")
@@ -17,9 +16,8 @@ def load_answer_rule(path: str = "app/prompts/answer_synthesis.txt") -> str:
         return f.read().strip()
 
 
-# ======================
-# 🔹 Tạo map ID -> Record (từ Neo4j)
-# ======================
+
+# Tạo map ID -> Record (từ Neo4j)
 def build_id_map_from_graph_records(records: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
     """Tạo map id -> record (thuộc tính từ Neo4j)."""
     id_map = {}
@@ -30,9 +28,8 @@ def build_id_map_from_graph_records(records: List[Dict[str, Any]]) -> Dict[str, 
     return id_map
 
 
-# ======================
-# 🔹 Fetch lại bài viết theo ID từ VectorDB
-# ======================
+
+# Fetch lại bài viết theo ID từ VectorDB
 def vector_fetch_by_ids(vclient: VectorClient, ids: List[str], limit: int = 3) -> List[Passage]:
     """Truy xuất lại các bài theo ID từ VectorDB."""
     vs = vclient._load_vs()
@@ -52,10 +49,9 @@ def vector_fetch_by_ids(vclient: VectorClient, ids: List[str], limit: int = 3) -
     return results
 
 
-# ======================
-# 🔹 Chọn top 3 bài ưu tiên giữa Graph và Vector
-# ======================
-def select_top3_by_priority(
+
+# Chọn top 3 bài ưu tiên giữa Graph và Vector
+def select_topN_by_priority(
     graph_ids: List[str],
     vector_passages: List[Passage],
     vclient: VectorClient,
@@ -68,7 +64,7 @@ def select_top3_by_priority(
     graph_ids = [str(x).strip() for x in graph_ids if str(x).strip()]
     vector_by_id = {str(p.id).strip(): p for p in vector_passages if p.id}
 
-    # 1️⃣ Overlap giữa Graph & Vector
+    # 1 Overlap giữa Graph & Vector
     for gid in graph_ids:
         if gid in vector_by_id and gid not in used_ids:
             picked.append(vector_by_id[gid])
@@ -76,7 +72,7 @@ def select_top3_by_priority(
             if len(picked) >= fill_limit:
                 return picked
 
-    # 2️⃣ Graph có ID nhưng Vector chưa có → fetch thủ công
+    # 2 Graph có ID nhưng Vector chưa có → fetch thủ công
     missing_from_vector = [gid for gid in graph_ids if gid not in used_ids and gid not in vector_by_id]
     if missing_from_vector:
         fetched = vector_fetch_by_ids(vclient, missing_from_vector, limit=(fill_limit - len(picked)))
@@ -87,7 +83,7 @@ def select_top3_by_priority(
                 if len(picked) >= fill_limit:
                     return picked
 
-    # 3️⃣ Bổ sung từ vector_passages còn lại
+    # 3 Bổ sung từ vector_passages còn lại
     for p in vector_passages:
         pid = str(p.id).strip() if p.id else None
         if pid and pid not in used_ids:
@@ -99,9 +95,8 @@ def select_top3_by_priority(
     return picked[:fill_limit]
 
 
-# ======================
-# 🔹 Chuẩn bị input tổng hợp (graph + vector)
-# ======================
+
+# Chuẩn bị input tổng hợp (graph + vector)
 def build_synthesis_input(chosen_passages: List[Passage], graph_id_map: Dict[str, Dict[str, Any]]) -> str:
     """Tạo text có cấu trúc để gửi LLM tổng hợp."""
     blocks = []
@@ -123,9 +118,8 @@ def build_synthesis_input(chosen_passages: List[Passage], graph_id_map: Dict[str
     return "\n\n---\n\n".join(pretty)
 
 
-# ======================
-# 🔹 Tổng hợp đầu ra cuối cùng bằng LLM
-# ======================
+
+# Tổng hợp đầu ra cuối cùng bằng LLM
 def llm_summarize_answer(
     client: OpenAI,
     user_query: str,
