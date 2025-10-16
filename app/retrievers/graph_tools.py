@@ -104,8 +104,8 @@ if __name__ == "__main__":
 
 
 
-# Test bug
-print(" DEBUG NEO4J CONFIG ")
+# Test bug 
+print(" DEBUG NEO4J TEST KẾT NỐI ")
 print("NEO4J_URI:", repr(NEO4J_URI))
 print("NEO4J_USER:", repr(NEO4J_USER))
 print("NEO4J_PASSWORD:", "SET" if NEO4J_PASSWORD else "None")

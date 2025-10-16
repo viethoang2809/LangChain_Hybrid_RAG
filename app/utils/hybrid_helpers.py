@@ -118,6 +118,114 @@ def build_synthesis_input(chosen_passages: List[Passage], graph_id_map: Dict[str
     return "\n\n---\n\n".join(pretty)
 
 
+# CONFIDENCE SCORING
+def _clip(v: float, lo: float, hi: float) -> float:
+    return max(lo, min(hi, v))
+
+def compute_confidence(
+    semantic_score: float,
+    hop_distance: int = 0,
+    relation_weight: float = 1.0,
+    alpha: float = 0.6,
+    beta: float = 0.3,
+    gamma: float = 0.1,
+) -> float:
+    """
+    Điểm tin cậy tổng hợp:
+      - semantic_score: cosine similarity (0..1) từ VectorDB (p.score)
+      - hop_distance: 0 nếu id trùng Graph, >0 nếu không trùng (ước lượng)
+      - relation_weight: tầm quan trọng record (0.5..1.0)
+      - alpha/beta/gamma: trọng số (có thể tinh chỉnh)
+
+    S_final = α*S_sem + β*(1/(1+hop)) + γ*w_rel
+    """
+    s_sem = _clip(float(semantic_score or 0.0), 0.0, 1.0)
+    s_graph = 1.0 / (1.0 + max(0, int(hop_distance)))
+    s_rel = _clip(float(relation_weight or 1.0), 0.0, 1.0)
+    return round(alpha * s_sem + beta * s_graph + gamma * s_rel, 4)
+
+
+def estimate_relation_weight(graph_info: dict) -> float:
+    """
+    Ước lượng 'độ quan trọng' của record theo các thuộc tính có mặt trong Graph.
+    Không cần chính xác tuyệt đối; mục tiêu là ưu tiên record giàu thông tin hơn.
+    Trả về trong khoảng [0.5, 1.0].
+    """
+    if not graph_info:
+        return 0.5
+
+    w = 0.5
+    # Có pháp lý 'sổ đỏ/chính chủ' -> tăng mạnh
+    legal = (graph_info.get("legal_status") or [])
+    legal_text = " ".join([str(x) for x in legal]).lower()
+    if "sổ đỏ" in legal_text or "chính chủ" in legal_text:
+        w += 0.2
+
+    # Có loại hình, địa chỉ -> tăng nhẹ
+    if graph_info.get("property_type"):
+        w += 0.1
+    if graph_info.get("full_address"):
+        w += 0.05
+
+    # Có tiện ích nội bộ / gần tiện ích -> tăng nhẹ
+    if graph_info.get("internal_amenities"):
+        w += 0.05
+    if graph_info.get("near_facilities"):
+        w += 0.05
+
+    return _clip(w, 0.5, 1.0)
+
+
+def attach_confidence_to_passages(
+    passages: List[Passage],
+    graph_id_map: Dict[str, Dict[str, Any]],
+    default_hop_no_match: int = 2,
+    alpha: float = 0.6,
+    beta: float = 0.3,
+    gamma: float = 0.1,
+) -> List[Passage]:
+    """
+    Gắn các trường chấm điểm vào metadata của từng Passage:
+      - semantic (từ p.score nếu có)
+      - hop (0 nếu id trùng Graph, else default_hop_no_match)
+      - rel_weight (ước lượng từ record Graph tương ứng)
+      - confidence (điểm tổng hợp)
+
+    Trả về danh sách passages (giữ nguyên object) để có thể tiếp tục dùng.
+    """
+    for p in passages:
+        pid = str(p.id).strip() if p.id else None
+        semantic = float(p.score) if isinstance(p.score, (int, float)) else 0.0
+        hop = 0 if (pid and pid in graph_id_map) else default_hop_no_match
+        rel_w = estimate_relation_weight(graph_id_map.get(pid) or {})
+
+        conf = compute_confidence(semantic, hop, rel_w, alpha=alpha, beta=beta, gamma=gamma)
+
+        # Lưu vào metadata để CLI/Streamlit debug dễ
+        meta = p.metadata or {}
+        meta["semantic"] = round(semantic, 4)
+        meta["hop"] = hop
+        meta["relation_weight"] = round(rel_w, 3)
+        meta["confidence"] = conf
+        p.metadata = meta
+    return passages
+
+
+def rerank_by_confidence(passages: List[Passage]) -> List[Passage]:
+    """
+    Sắp xếp lại theo confidence (giảm dần).
+    Nếu passage thiếu confidence, coi như 0.
+    """
+    def _get_conf(p):
+        try:
+            return float((p.metadata or {}).get("confidence") or 0.0)
+        except Exception:
+            return 0.0
+    return sorted(passages, key=_get_conf, reverse=True)
+
+
+
+
 
 # Tổng hợp đầu ra cuối cùng bằng LLM
 def llm_summarize_answer(

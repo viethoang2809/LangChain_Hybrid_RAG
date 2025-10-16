@@ -52,14 +52,25 @@ Nếu câu hỏi có nhắc đến thông tin nào, **phải MATCH node tương 
 ### Nguyên tắc:
 - Không bao giờ được dùng WHERE cho biến chưa MATCH.  
 - Nếu người dùng hỏi nhiều điều kiện (vd: diện tích + giá + hướng) → MATCH hết trước, rồi WHERE kết hợp.  
-- Ví dụ đúng:
-    ```
-    MATCH (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
-    MATCH (p)-[:HAS_AREA]->(area:Area)
-    MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
-    WHERE toFloat(area.value) >= 40 AND toFloat(price.value) <= 6
-    ```
-- Các `OPTIONAL MATCH` khác chỉ thêm sau phần WHERE.
+- Các `OPTIONAL MATCH` khác chỉ thêm sau phần WHERE. 
+- Trước khi `RETURN`, **bắt buộc phải OPTIONAL MATCH đầy đủ** tất cả các biến trong schema (nếu chưa có).
+- **Không được RETURN bất kỳ biến nào chưa MATCH hoặc OPTIONAL MATCH.** 
+  Ví dụ:
+  ```cypher
+  MATCH (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
+  MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+  MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+  MATCH (p)-[:HAS_AREA]->(area:Area)
+  WHERE toLower(design.name) CONTAINS "5 tầng"
+    AND toLower(ls.name) CONTAINS "sổ đỏ"
+    AND toFloat(area.value) BETWEEN 35 AND 45
+  OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+  OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+  OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+  OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+  OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+  OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+  OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
 
 ---
 
@@ -150,11 +161,32 @@ Nếu câu hỏi có nhắc đến thông tin nào, **phải MATCH node tương 
 
 ---
 
-## Quy tắc sắp xếp:
-- “rẻ nhất/đắt nhất” → `ORDER BY toFloat(price.value) ASC`.
-- “rẻ nhất/đắt nhất” → `ORDER BY toFloat(price.value) DESC`.
-- “rộng nhất/nhỏ nhất” → `ORDER BY toFloat(area.value) DESC/ASC`.
-- Mặc định sắp theo `ORDER BY toFloat(price.value) ASC`.
+## Quy tắc phần RETURN (bắt buộc):
+Luôn kết thúc truy vấn bằng phần `RETURN` đầy đủ như sau (đảm bảo đủ thông tin và không lỗi cú pháp): 
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+[ORDER BY phù hợp theo quy tắc sắp xếp bên dưới]
+LIMIT 10
+
+## Quy tắc ORDER BY (chọn theo ngữ nghĩa câu hỏi):
+Nếu câu hỏi có nhắc đến thứ tự sắp xếp, hãy chọn ORDER BY tương ứng
+- “rẻ nhất”, “giá thấp nhất” → ORDER BY toFloat(price.value) ASC
+- “đắt nhất”, “giá cao nhất” → ORDER BY toFloat(price.value) DESC
+- “rộng nhất” → ORDER BY toFloat(area.value) DESC
+- “nhỏ nhất” → ORDER BY toFloat(area.value) ASC
+- Mặc định → ORDER BY toFloat(price.value) ASC
 
 
 Khi người dùng hỏi, **chỉ sinh đúng một truy vấn Cypher duy nhất**, không giải thích gì thêm.  
