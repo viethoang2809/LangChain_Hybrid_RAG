@@ -38,16 +38,17 @@ def run_query_once(user_query: str, top_k: int = 10, limit: int = 3, show_debug:
 
     print("⏳ Đang truy vấn dữ liệu song song từ Neo4j và FAISS...\n")
 
-    # --- Đo thời gian tổng ---
+    # Đo thời gian tổng
     total_start = time.time()
     hybrid_start = time.time()
     hybrid_result = asyncio.run(hybrid.search(user_query=user_query, top_k=top_k))
     hybrid_time = int((time.time() - hybrid_start) * 1000)
 
+    # Lấy kết quả 
     graph_records = hybrid_result["graph_records"]
     graph_ids = hybrid_result["graph_ids"]
     vector_passages = hybrid_result["vector_passages"]
-
+    
     # Xây map Graph
     graph_id_map = build_id_map_from_graph_records(graph_records)
 

@@ -84,6 +84,13 @@ def main():
             graph_ids = hybrid_result["graph_ids"]
             vector_passages = hybrid_result["vector_passages"]
 
+            # 📜 Hiển thị Cypher Query nếu có
+            if "cypher_query" in hybrid_result and hybrid_result["cypher_query"]:
+                st.markdown("---")
+                st.subheader("📜 Truy vấn Cypher được sinh ra")
+                st.code(hybrid_result["cypher_query"], language="cypher")
+
+
             # 2 Kết hợp dữ liệu
             graph_id_map = build_id_map_from_graph_records(graph_records)
             chosen_passages = select_topN_by_priority(

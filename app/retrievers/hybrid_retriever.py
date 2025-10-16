@@ -26,7 +26,7 @@ class HybridRetrieverParallel:
         return await loop.run_in_executor(None, self.vector.search, query, top_k, True)
 
     async def search(self, user_query: str, top_k: int = 10) -> Dict[str, Any]:
-        """Chạy song song thật sự giữa Graph và Vector."""
+        """Chạy song song giữa Graph và Vector."""
         start = time.time()
         print("\n🚀 Đang chạy song song Graph + Vector...\n")
 
@@ -40,6 +40,7 @@ class HybridRetrieverParallel:
         graph_records = graph_result.get("result") or []
         graph_ids = [str(r.get("id")).strip() for r in graph_records if r.get("id")]
         vector_passages = vector_result.passages if not vector_result.error else []
+        cypher_query = graph_result.get("cypher_query") or graph_result.get("cypher")
 
         print(f"✅ Graph xong: {len(graph_records)} kết quả")
         print(f"✅ Vector xong: {len(vector_passages)} kết quả")
@@ -52,6 +53,7 @@ class HybridRetrieverParallel:
             "vector_passages": vector_passages,
             "vector_time_ms": vector_result.took_ms,
             "vector_error": vector_result.error,
+            "cypher_query": cypher_query,
             "took_ms": took,
         }
 

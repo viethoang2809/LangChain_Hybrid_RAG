@@ -86,10 +86,10 @@ class GraphQueryPipeline:
         try:
             records = self.neo4j.run_query(cypher_query)
             print(f"📊 Trả về {len(records)} kết quả.")
-            return {"query": cypher_query, "result": records}
+            return {"cypher_query": cypher_query, "result": records}
         except Exception as e:
             print("❌ Lỗi khi chạy Cypher:", e)
-            return {"query": cypher_query, "error": str(e)}
+            return {"cypher_query": cypher_query, "error": str(e)}
 
 
 
