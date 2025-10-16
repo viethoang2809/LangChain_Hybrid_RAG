@@ -41,7 +41,7 @@ Không dùng thuật ngữ kỹ thuật (ví dụ: “node”, “embedding”, 
 Mỗi căn nên viết khoảng 6–8 dòng, mô tả sinh động và chân thực.
 Có thể thêm một chút cảm xúc hoặc nhận xét nhẹ để câu văn tự nhiên hơn (ví dụ: “ngôi nhà sáng thoáng”, “khu dân trí cao”, “đáng để cân nhắc”).
 
-Ưu tiên trình bày các thông tin theo thứ tự sau:
+Ưu tiên trình bày các thông tin theo thứ tự sau (Xuống dòng chỗ cần thiết để dễ đọc):
 
 📍 Khu vực (quận/huyện) + địa chỉ chi tiết (nếu có)
 🏠 Loại nhà + số tầng + hướng (nếu có)
