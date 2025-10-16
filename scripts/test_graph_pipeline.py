@@ -1,6 +1,5 @@
 """
-🧪 Test script cho module graph_tools.py
-
+ Test script cho module graph_tools.py
 Chạy:
     python -m scripts.test_graph_pipeline
 """
@@ -15,9 +14,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from app.retrievers.graph_tools import GraphQueryPipeline, Neo4jExecutor
 
 
-# =======================================
-# 🔌 TEST 1: KIỂM TRA KẾT NỐI NEO4J
-# =======================================
+# TEST 1: KIỂM TRA KẾT NỐI NEO4J
 def test_connection_only():
     print("🔌 Kiểm tra kết nối Neo4j...")
     executor = Neo4jExecutor()
@@ -32,9 +29,7 @@ def test_connection_only():
         executor.close()
 
 
-# =======================================
-# 🚀 TEST 2: CHẠY PIPELINE VỚI DANH SÁCH CÂU HỎI MẪU
-# =======================================
+# TEST 2: CHẠY PIPELINE VỚI DANH SÁCH CÂU HỎI MẪU
 def run_predefined_tests(pipeline: GraphQueryPipeline):
     test_queries = [
         "Tìm nhà 5 tầng gần đại học Thương Mại",

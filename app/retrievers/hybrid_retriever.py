@@ -27,16 +27,16 @@ class HybridRetriever:
         """
         Truy vấn song song cả Graph và Vector, nhưng chỉ query Neo4j 1 lần.
         """
-        # === 1. Query Graph (NL2Cypher + thực thi)
+        # 1. Query Graph (NL2Cypher + thực thi)
         graph_result = self.graph.run_pipeline(user_query)
         graph_records = graph_result.get("result") or []
         graph_ids = [str(r.get("id")).strip() for r in graph_records if r.get("id")]
 
-        # === 2. Vector Search
+        # 2. Vector Search
         vector_result = self.vector.search(user_query, k=top_k, mmr=True)
         vector_passages = vector_result.passages if not vector_result.error else []
 
-        # === 3. Trả về hợp nhất
+        # 3. Trả về hợp nhất
         return {
             "query": user_query,
             "graph_records": graph_records,   # đã có đủ dữ liệu (1 lần query)
@@ -47,9 +47,8 @@ class HybridRetriever:
         }
 
 
-# =====================================
-# 🔍 TEST NHANH
-# =====================================
+
+# TEST NHANH
 if __name__ == "__main__":
     retriever = HybridRetriever()
 

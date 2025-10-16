@@ -25,10 +25,8 @@ OPENAI_MODEL = get_var("OPENAI_MODEL", "gpt-4o-mini")
 
 
 
-
-# ==========================
-# 🔌 NEO4J EXECUTOR
-# ==========================
+# NEO4J EXECUTOR
+# Kết nối với Neo4j và thực thi Cypher
 class Neo4jExecutor:
     def __init__(self):
         self.driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
@@ -43,15 +41,16 @@ class Neo4jExecutor:
         self.driver.close()
 
 
-# ==========================
-# 🚀 GRAPH QUERY PIPELINE
-# ==========================
+
+# GRAPH QUERY PIPELINE
 class GraphQueryPipeline:
+    # Khởi tạo các thành phần
     def __init__(self):
         self.retriever = NL2CypherRetriever()
         self.client = OpenAI()
         self.neo4j = Neo4jExecutor()
 
+    # Làm sạch kết quả LLM trả về
     def clean_cypher(self, text: str) -> str:
         """Làm sạch kết quả LLM (loại bỏ ```cypher...)"""
         if not text:
@@ -62,8 +61,10 @@ class GraphQueryPipeline:
             .strip()
         )
 
+    # Gửi prompt đến LLM để sinh Cypher
     def generate_cypher(self, user_query: str, k: int = 3) -> str:
         """Dùng LLM để sinh Cypher từ câu hỏi"""
+        # Build prompt từ nl2cypher
         prompt = self.retriever.build_prompt(user_query, k=k)
 
         print("\n📤 GỬI PROMPT ĐẾN OPENAI...\n")
@@ -76,7 +77,8 @@ class GraphQueryPipeline:
         cypher = self.clean_cypher(response.choices[0].message.content)
         print("\n✅ Cypher sinh ra:\n", cypher)
         return cypher
-
+    
+    # Thực thi pineline nhận câu hỏi => Cypher => Kết quả
     def run_pipeline(self, user_query: str):
         """Full pipeline: NL → Cypher → Query → Result"""
         cypher_query = self.generate_cypher(user_query)
@@ -90,9 +92,8 @@ class GraphQueryPipeline:
             return {"query": cypher_query, "error": str(e)}
 
 
-# ==========================
-# 🧪 DEMO CHẠY THỬ
-# ==========================
+
+# DEMO CHẠY THỬ
 if __name__ == "__main__":
     pipeline = GraphQueryPipeline()
     question = "Tìm nhà 5 tầng sổ đỏ chính chủ đầy đủ nội thất tại Thanh Xuân"

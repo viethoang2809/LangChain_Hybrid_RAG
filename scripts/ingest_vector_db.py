@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS, Chroma
 
-# === 1️⃣ Load biến môi trường ===
+# Load biến môi trường
 load_dotenv()
 
 DATA_PATH = "data/project-text-semantic.csv"
@@ -17,17 +17,17 @@ os.makedirs(VDB_DIR, exist_ok=True)
 print(f"📂 Đang đọc dữ liệu từ: {DATA_PATH}")
 df = pd.read_csv(DATA_PATH)
 
-# === 2️⃣ Kiểm tra dữ liệu ===
+# Kiểm tra dữ liệu 
 if not {"id", "text"}.issubset(df.columns):
     raise ValueError("❌ File CSV phải có 2 cột: 'id' và 'text'")
 
 print(f"✅ Số bài rao cần embedding: {len(df)}")
 
-# === 3️⃣ Chuẩn bị dữ liệu embedding ===
+# Chuẩn bị dữ liệu embedding 
 texts = df["text"].astype(str).tolist()
 metadatas = [{"id": str(row["id"])} for _, row in df.iterrows()]
 
-# === 4️⃣ Tạo embedding ===
+# Tạo embedding 
 print(f"🧠 Đang tạo embedding bằng model: {EMBED_MODEL}")
 emb = OpenAIEmbeddings(model=EMBED_MODEL)
 

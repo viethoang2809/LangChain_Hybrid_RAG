@@ -13,7 +13,7 @@ print("🔍 Kiểm tra API key:", api_key[:8] + "..." if api_key else "❌ Khôn
 try:
     client = OpenAI(api_key=api_key)
 
-    # 1️⃣ Test model chat
+    # 1 Test model chat
     print("\n🧠 Đang test model chat:", model)
     chat_response = client.chat.completions.create(
         model=model,
@@ -21,7 +21,7 @@ try:
     )
     print("✅ Chat model trả lời:", chat_response.choices[0].message.content)
 
-    # 2️⃣ Test embedding
+    # 2 Test embedding
     print("\n🔡 Đang test embedding:", embed_model)
     emb_response = client.embeddings.create(
         model=embed_model,

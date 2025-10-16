@@ -12,7 +12,6 @@ import streamlit as st
 
 # Cấu hình
 load_dotenv()
-
 def get_var(key, default=None, section="general"):
     try:
         return st.secrets[section].get(key, default)
@@ -22,6 +21,7 @@ def get_var(key, default=None, section="general"):
 EMBED_MODEL = get_var("OPENAI_EMBED_MODEL", "text-embedding-3-small")
 VECTOR_STORE_PATH = get_var("VECTOR_STORE_PATH", ".vector_store/text_embeddings")
 
+# Khai báo kiểu dữ liệu
 @dataclass
 class Passage:
     id: Optional[str]
@@ -29,6 +29,7 @@ class Passage:
     score: Optional[float] = None
     metadata: Optional[Dict[str, Any]] = None
 
+# Gói toàn bộ kết quả tìm kiếm, thời gian, lỗi nếu có
 @dataclass
 class VectorResult:
     passages: List[Passage]
@@ -36,6 +37,7 @@ class VectorResult:
     error: Optional[str] = None
 
 class VectorClient:
+    # Khởi tạo biến
     def __init__(self,
                  index_path: str = VECTOR_STORE_PATH,
                  emb_model: str = EMBED_MODEL) -> None:
@@ -44,11 +46,13 @@ class VectorClient:
         self._vs = None
         self._emb = None
 
+    # Dùng model từ biến cấu hình
     def _get_embeddings(self):
         if self._emb is None:
             self._emb = OpenAIEmbeddings(model=self.emb_model)
         return self._emb
 
+    # Load vector store (FAISS) nếu không có thì báo lỗi
     def _load_vs(self):
         if self._vs is None:
             emb = self._get_embeddings()
@@ -57,6 +61,7 @@ class VectorClient:
             self._vs = FAISS.load_local(self.index_path, emb, allow_dangerous_deserialization=True)
         return self._vs
 
+    # Hàm tìm kiếm văn bản tương tự
     def search(self, query: str, k: int = 10, mmr: bool = True) -> VectorResult:
         start = time.time()
         passages: List[Passage] = []
@@ -111,6 +116,10 @@ class VectorClient:
         took_ms = int((time.time() - start) * 1000)
         return VectorResult(passages=passages, took_ms=took_ms, error=err)
 
+
+    # Hợp nhất kết quả theo thuật toán Reciprocal Rank Fusion
+    # Tái xếp hạng ưu tiên các passages có id trùng với graph
+    # 
     @staticmethod
     def rrf_fuse(ids_from_graph: List[str], vector_passages: List[Passage], k: int = 8) -> List[Passage]:
         """

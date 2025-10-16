@@ -14,9 +14,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from app.retrievers.hybrid_retriever import HybridRetriever
 
 
-# ==============================
-# 🚀 CHẠY TEST TỰ ĐỘNG
-# ==============================
+# CHẠY TEST TỰ ĐỘNG
 def test_hybrid_queries():
     print("\n🚀 BẮT ĐẦU TEST HYBRID RETRIEVER\n")
     retriever = HybridRetriever()
@@ -49,9 +47,7 @@ def test_hybrid_queries():
         print("===================================================")
 
 
-# ==============================
-# 💬 CHẾ ĐỘ NHẬP CÂU HỎI
-# ==============================
+# CHẾ ĐỘ NHẬP CÂU HỎI
 def interactive_mode():
     print("\n🗨️  CHẾ ĐỘ NHẬP CÂU HỎI TƯƠNG TÁC (gõ 'exit' để thoát)\n")
     retriever = HybridRetriever()
@@ -77,9 +73,8 @@ def interactive_mode():
         print("===================================================")
 
 
-# ==============================
-# 🧭 MAIN
-# ==============================
+
+# MAIN
 if __name__ == "__main__":
     print("🧪 TEST HYBRID RETRIEVER\n")
     load_dotenv()

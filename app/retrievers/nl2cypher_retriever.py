@@ -32,9 +32,8 @@ class NL2CypherRetriever:
         self.schema_text = self._load_schema()
         self._load_or_build_index()
 
-    # ======================
-    # 🔹 LOAD SCHEMA PROMPT
-    # ======================
+
+    # LOAD SCHEMA PROMPT
     def _load_schema(self):
         if not os.path.exists(self.schema_path):
             raise FileNotFoundError(f"❌ Không tìm thấy file schema: {self.schema_path}")
@@ -43,9 +42,8 @@ class NL2CypherRetriever:
         print(f"📜 Đã load schema từ {self.schema_path}")
         return schema_text
 
-    # ======================
-    # 🔹 LOAD / BUILD INDEX
-    # ======================
+
+    # LOAD / BUILD INDEX nếu chưa có
     def _load_or_build_index(self):
         faiss_path = os.path.join(self.store_dir, "index.faiss")
         if os.path.exists(faiss_path):
@@ -71,9 +69,8 @@ class NL2CypherRetriever:
         self.vdb.save_local(self.store_dir)
         print(f"✅ Đã tạo FAISS index từ {len(df)} ví dụ.")
 
-    # ======================
-    # 🔹 TRUY XUẤT VÍ DỤ
-    # ======================
+
+    # TRUY XUẤT VÍ DỤ
     def retrieve_examples(self, query: str, k: int = 3):
         """Tìm top-k ví dụ semantic gần nhất trong index"""
         if not self.vdb:
@@ -91,9 +88,8 @@ class NL2CypherRetriever:
             print("💬 Cypher:", ex["Cypher"])
             print()
 
-    # ======================
-    # 🔹 TẠO PROMPT CHO GPT
-    # ======================
+
+    # TẠO PROMPT CHO GPT
     def build_prompt(self, user_query: str, k: int = 3):
         """Ghép prompt hoàn chỉnh để gửi GPT"""
         examples = self.retrieve_examples(user_query, k=k)
@@ -120,9 +116,7 @@ Chỉ trả về DUY NHẤT code block chứa truy vấn Cypher hợp lệ.
         return prompt
 
 
-# ======================
-# 🔹 DEMO
-# ======================
+# DEMO
 if __name__ == "__main__":
     retriever = NL2CypherRetriever()
     query = "Tìm nhà sổ đỏ chính chủ tại Thanh Xuân"

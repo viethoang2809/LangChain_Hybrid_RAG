@@ -14,9 +14,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from app.retrievers.vector_tools import VectorClient
 
 
-# ===============================
-# 🚀 HÀM CHẠY TEST TỰ ĐỘNG
-# ===============================
+
+# HÀM CHẠY TEST TỰ ĐỘNG
 def test_vector_search_basic():
     print("🚀 TEST TÌM KIẾM SEMANTIC TRONG VECTOR DB\n")
     client = VectorClient()
@@ -48,9 +47,8 @@ def test_vector_search_basic():
         print("=====================================================")
 
 
-# ===============================
-# 💬 HÀM CHO PHÉP NHẬP CÂU HỎI
-# ===============================
+
+# HÀM CHO PHÉP NHẬP CÂU HỎI
 def interactive_mode():
     print("\n🗨️  CHẾ ĐỘ NHẬP CÂU HỎI TƯƠNG TÁC (gõ 'exit' để thoát)\n")
     client = VectorClient()
@@ -75,9 +73,8 @@ def interactive_mode():
             print(f"    {preview[:200]}{'...' if len(preview)>200 else ''}\n")
 
 
-# ===============================
-# 🧭 MAIN
-# ===============================
+
+# MAIN
 if __name__ == "__main__":
     print("🧪 BẮT ĐẦU TEST VECTOR TOOLS...\n")
     load_dotenv()
