@@ -54,6 +54,8 @@ Nếu câu hỏi có nhắc đến thông tin nào, **phải MATCH node tương 
 - Nếu người dùng hỏi nhiều điều kiện (vd: diện tích + giá + hướng) → MATCH hết trước, rồi WHERE kết hợp.  
 - Các `OPTIONAL MATCH` khác chỉ thêm sau phần WHERE. 
 - Trước khi `RETURN`, **bắt buộc phải OPTIONAL MATCH đầy đủ** tất cả các biến trong schema (nếu chưa có).
+- Bắt buộc phải có "OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)" để liên kết với   "OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)"
+  và "OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)"
 - **Không được RETURN bất kỳ biến nào chưa MATCH hoặc OPTIONAL MATCH.** 
   Ví dụ:
   ```cypher

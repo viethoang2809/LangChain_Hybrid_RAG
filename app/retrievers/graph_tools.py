@@ -66,7 +66,15 @@ class GraphQueryPipeline:
         """Dùng LLM để sinh Cypher từ câu hỏi"""
         # Build prompt từ nl2cypher
         prompt = self.retriever.build_prompt(user_query, k=k)
+        examples = self.retriever.retrieve_examples(user_query, k=k)
+        print(f"\n📚 Đã lấy {len(examples)} ví dụ few-shot gần nhất cho: '{user_query}'\n")
 
+        for i, ex in enumerate(examples, 1):
+            print(f"--- Ví dụ {i} ---")
+            print("❓ Question:", ex["Question"])
+            print("💬 Cypher:", ex["Cypher"])
+            print()
+            
         print("\n📤 GỬI PROMPT ĐẾN OPENAI...\n")
         response = self.client.chat.completions.create(
             model=OPENAI_MODEL,
