@@ -45,9 +45,8 @@ def run_predefined_tests(pipeline: GraphQueryPipeline):
         run_query_and_show_result(pipeline, query)
 
 
-# =======================================
-# 💬 TEST 3: CHO PHÉP NHẬP CÂU HỎI THỦ CÔNG
-# =======================================
+
+# TEST 3: CHO PHÉP NHẬP CÂU HỎI THỦ CÔNG
 def interactive_query_mode(pipeline: GraphQueryPipeline):
     print("\n🗨️  CHẾ ĐỘ NHẬP CÂU HỎI TƯƠNG TÁC (gõ 'exit' để thoát)\n")
     while True:
@@ -62,9 +61,7 @@ def interactive_query_mode(pipeline: GraphQueryPipeline):
         run_query_and_show_result(pipeline, user_query)
 
 
-# =======================================
-# 🧩 HÀM PHỤ TRỢ
-# =======================================
+# HÀM PHỤ TRỢ
 def show_semantic_examples(pipeline: GraphQueryPipeline, query: str):
     """Hiển thị top-3 câu hỏi gần nghĩa nhất và Cypher mẫu"""
     examples = pipeline.retriever.retrieve_examples(query, k=3)
@@ -92,9 +89,8 @@ def run_query_and_show_result(pipeline: GraphQueryPipeline, query: str):
     print("===================================================")
 
 
-# =======================================
-# 🧭 MAIN
-# =======================================
+
+# MAIN
 if __name__ == "__main__":
     print("🧪 BẮT ĐẦU TEST GRAPH PIPELINE...\n")
     load_dotenv()

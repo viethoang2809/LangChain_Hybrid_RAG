@@ -119,7 +119,6 @@ class VectorClient:
 
     # Hợp nhất kết quả theo thuật toán Reciprocal Rank Fusion
     # Tái xếp hạng ưu tiên các passages có id trùng với graph
-    # 
     @staticmethod
     def rrf_fuse(ids_from_graph: List[str], vector_passages: List[Passage], k: int = 8) -> List[Passage]:
         """

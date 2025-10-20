@@ -1,5 +1,5 @@
 """
-🧪 Test script cho module vector_tools.py
+ Test script cho module vector_tools.py
 Chạy:
     python -m scripts.test_vector_tools
 """
