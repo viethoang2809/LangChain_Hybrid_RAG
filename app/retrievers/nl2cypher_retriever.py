@@ -71,14 +71,14 @@ class NL2CypherRetriever:
 
 
     # TRUY XUẤT VÍ DỤ
-    def retrieve_examples(self, query: str, k: int = 3):
+    def retrieve_examples(self, query: str, k: int = 10):
         """Tìm top-k ví dụ semantic gần nhất trong index"""
         if not self.vdb:
             raise RuntimeError("⚠️ VectorDB chưa được load hoặc build.")
         results = self.vdb.similarity_search(query, k=k)
         return [{"Question": r.page_content, "Cypher": r.metadata["Cypher"]} for r in results]
 
-    def debug_retrieve(self, query: str, k: int = 3):
+    def debug_retrieve(self, query: str, k: int = 10):
         """In ra ví dụ gần nghĩa nhất để debug"""
         examples = self.retrieve_examples(query, k)
         print(f"\n🔍 Top-{k} ví dụ semantic gần nhất cho: '{query}'\n")
@@ -90,7 +90,7 @@ class NL2CypherRetriever:
 
 
     # TẠO PROMPT CHO GPT
-    def build_prompt(self, user_query: str, k: int = 3):
+    def build_prompt(self, user_query: str, k: int = 10):
         """Ghép prompt hoàn chỉnh để gửi GPT"""
         examples = self.retrieve_examples(user_query, k=k)
         few_shot_text = "\n\n".join(

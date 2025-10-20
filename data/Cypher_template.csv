@@ -18,7 +18,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -41,7 +41,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -64,7 +64,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -87,7 +87,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -110,7 +110,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -134,7 +134,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""bắc"" AND x CONTAINS ""đông""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name))  AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -157,7 +157,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -180,7 +180,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -203,7 +203,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -226,7 +226,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -249,7 +249,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -272,7 +272,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -295,13 +295,13 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Nhà hướng Đông Nam ở Tây Hồ có sẵn không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""tây hồ""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-WHERE toLower(dir.name) CONTAINS ""nam""
+WHERE toLower(dir.name) CONTAINS ""đông nam""
 OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
 OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
 OPTIONAL MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
@@ -318,7 +318,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -341,7 +341,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -364,7 +364,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -387,7 +387,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -410,7 +410,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -433,7 +433,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 1"
@@ -456,7 +456,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -480,7 +480,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""bắc"" AND x CONTAINS ""đông""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -504,7 +504,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name))  AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -529,7 +529,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name))  AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   COLLECT(DISTINCT toLower(fac.name)) AS near_facilities
 ORDER BY toFloat(price.value) ASC
@@ -555,7 +555,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 3) ASC
 LIMIT 10"
@@ -578,7 +578,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -601,7 +601,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -624,7 +624,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -647,13 +647,13 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Có nhà hướng Tây ở Long Biên không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-WHERE toLower(dir.name) CONTAINS ""tây nam""
+WHERE toLower(dir.name) CONTAINS ""tây""
 OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
 OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
 OPTIONAL MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
@@ -670,7 +670,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây nam""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -693,7 +693,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -716,13 +716,13 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Tìm nhà hướng Đông ở Long Biên","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-WHERE toLower(dir.name) CONTAINS ""tây""
+WHERE toLower(dir.name) CONTAINS ""đông""
 OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
 OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
 OPTIONAL MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
@@ -739,7 +739,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -762,7 +762,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -785,13 +785,13 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Cho tôi xem các căn hướng Đông Bắc ở Long Biên","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-WHERE toLower(dir.name) CONTAINS ""đông""
+WHERE toLower(dir.name) CONTAINS ""đông bắc""
 OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
 OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
 OPTIONAL MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
@@ -808,7 +808,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -831,7 +831,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -854,7 +854,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -877,7 +877,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""đông bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -900,7 +900,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -923,7 +923,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -946,7 +946,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -969,7 +969,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -992,34 +992,8 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây bắc""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
-ORDER BY toFloat(price.value) ASC
-LIMIT 10"
-"Tôi muốn tìm nhà hướng Tây Bắc gần Cầu Chương Dương","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
-MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
-WHERE toLower(dir.name) CONTAINS ""tây bắc""
-  AND toLower(fac.name) CONTAINS ""cầu chương dương""
-OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
-OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
-OPTIONAL MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
-OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
-OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
-OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
-OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
-RETURN DISTINCT
-  p.id AS id,
-  d.name AS district_name,
-  ptype.name AS property_type,
-  COLLECT(DISTINCT toLower(design.name)) AS house_design,
-  toFloat(area.value) AS area_m2,
-  toFloat(price.value) AS price_ty_vnd,
-  addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây bắc""] AS direction,
-  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Tìm nhà 40m2 ở Cầu Giấy giá khoảng 4 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
@@ -1046,16 +1020,17 @@ RETURN DISTINCT
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 4) ASC
 LIMIT 10"
-"Tìm căn hộ 80m2 full nội thất tại Thanh Xuân","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""thanh xuân""})-[:HAS_PROPERTY]->(p:Property)
+"Tìm căn hộ hơn 30m2 full nội thất tại Thanh Xuân","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""thanh xuân""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 WHERE toLower(ptype.name) CONTAINS ""căn hộ""
-  AND toFloat(area.value) >= 72 AND toFloat(area.value) <= 88
+  AND toFloat(area.value) >= 30
   AND (
     toLower(amen.name) CONTAINS ""đầy đủ nội thất"" OR
-    toLower(amen.name) CONTAINS ""full nội thất"" OR
-    toLower(amen.name) CONTAINS ""nội thất đầy đủ""
+    toLower(amen.name) CONTAINS ""nội thất"" OR
+    toLower(amen.name) CONTAINS ""nội thất đầy đủ"" OR
+    toLower(amen.name) CONTAINS ""đầy đủ""
   )
 OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
 OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -1072,8 +1047,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) 
-    WHERE x CONTAINS ""nội thất""] AS internal_amenities
+  COLLECT(DISTINCT toLower(amen.name))  AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Tôi muốn tìm nhà 5 tầng ở Long Biên hướng Tây tứ trạch có không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
@@ -1096,7 +1070,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -1120,7 +1094,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -1144,7 +1118,7 @@ RETURN DISTINCT
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  [x IN COLLECT(DISTINCT toLower(dir.name)) WHERE x CONTAINS ""tây""] AS direction,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
@@ -1171,8 +1145,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
@@ -1236,19 +1209,22 @@ OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
-RETURN DISTINCT
-  p.id AS id,
-  d.name AS district_name,
-  ptype.name AS property_type,
-  COLLECT(DISTINCT toLower(design.name)) AS house_design,
-  toFloat(area.value) AS area_m2,
-  toFloat(price.value) AS price_ty_vnd,
-  addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
-ORDER BY toFloat(price.value) ASC
-LIMIT 10"
+  RETURN DISTINCT
+    p.id AS id,
+    d.name AS district_name,
+    ptype.name AS property_type,
+    COLLECT(DISTINCT toLower(design.name)) AS house_design,
+    toFloat(area.value) AS area_m2,
+    toFloat(price.value) AS price_ty_vnd,
+    addr.name AS full_address,
+    COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+    COLLECT(DISTINCT toLower(dir.name)) AS direction,
+    COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+    COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+    head(COLLECT(DISTINCT cn.name)) AS contact_name,
+    head(COLLECT(DISTINCT cp.number)) AS contact_phone
+  ORDER BY toFloat(price.value) ASC
+  LIMIT 10;"
 "Tìm nhà 60m2 tại Thanh Xuân giá 6 tỷ còn không","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""thanh xuân""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
@@ -1292,7 +1268,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
@@ -1317,7 +1293,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1342,7 +1318,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1367,7 +1343,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1392,7 +1368,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1512,7 +1488,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
@@ -1537,7 +1513,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1562,7 +1538,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1612,7 +1588,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1637,7 +1613,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name))  AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY ABS(toFloat(price.value) - 5) ASC
@@ -1670,7 +1646,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""công năng""] AS internal_amenities
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Cần mua nhà 4 tầng đầy đủ công năng tại Thanh Xuân","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""thanh xuân""})-[:HAS_PROPERTY]->(p:Property)
@@ -1701,7 +1677,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""công năng""] AS internal_amenities
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
 "Ai đang bán nhà 3 tầng sổ đỏ ở Thanh Xuân","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""thanh xuân""})-[:HAS_PROPERTY]->(p:Property)
@@ -1726,7 +1702,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ đỏ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
@@ -1761,8 +1737,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
@@ -1798,8 +1773,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
@@ -1835,8 +1809,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
@@ -1872,11 +1845,10 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""chợ""] AS near_facilities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -1909,8 +1881,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
@@ -1944,8 +1915,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) 
-    WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name))  AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -1976,8 +1946,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) 
-    WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name))  AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2008,8 +1977,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) 
-    WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name))  AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2040,8 +2008,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) 
-    WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name))  AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2072,8 +2039,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) 
-    WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name))  AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2172,7 +2138,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2205,7 +2171,7 @@ RETURN DISTINCT
   addr.name AS full_address,
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2235,50 +2201,19 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Tìm biệt thự sân vườn 100m2 ở Tây Hồ giá 15 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""tây hồ""})-[:HAS_PROPERTY]->(p:Property)
-MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
-MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
-MATCH (p)-[:HAS_AREA]->(area:Area)
-MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
-WHERE toLower(ptype.name) CONTAINS ""biệt thự""
-  AND toLower(amen.name) CONTAINS ""sân vườn""
-  AND toFloat(area.value) >= 90 AND toFloat(area.value) <= 110
-  AND toFloat(price.value) >= 14 AND toFloat(price.value) <= 16
-OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
-OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
-OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
-OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
-OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
-OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
-RETURN DISTINCT
-  p.id AS id,
-  d.name AS district_name,
-  ptype.name AS property_type,
-  COLLECT(DISTINCT toLower(design.name)) AS house_design,
-  toFloat(area.value) AS area_m2,
-  toFloat(price.value) AS price_ty_vnd,
-  addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""sân vườn""] AS internal_amenities,
-  head(COLLECT(DISTINCT cn.name)) AS contact_name,
-  head(COLLECT(DISTINCT cp.number)) AS contact_phone
-ORDER BY ABS(toFloat(price.value) - 15) ASC
-LIMIT 10"
 "Tìm nhà nhỏ hơn 40m2 ở Hà Đông có sổ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hà đông""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) <= 88
+  AND toFloat(area.value) <= 40
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2313,7 +2248,7 @@ MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) <= 88
+  AND toFloat(area.value) <= 40
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2348,7 +2283,7 @@ MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) <= 88
+  AND toFloat(area.value) <= 40
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2378,12 +2313,12 @@ RETURN DISTINCT
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Tôi muốn tìm nhà ở Hà Đông sổ đỏ chính chủ diện tích khoảng 40m²","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hà đông""})-[:HAS_PROPERTY]->(p:Property)
+"Tôi muốn tìm nhà ở Hà Đông sổ đỏ chính chủ diện tích khoảng 35m²","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hà đông""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) >= 36 AND toFloat(area.value) <= 44
+  AND toFloat(area.value) >= 31.5 AND toFloat(area.value) <= 38.5
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2417,7 +2352,7 @@ MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) >= 36 AND toFloat(area.value) <= 44
+  AND toFloat(area.value) >= 31.5 AND toFloat(area.value) <= 38.5
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2451,7 +2386,7 @@ MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) >= 36 AND toFloat(area.value) <= 44
+  AND toFloat(area.value) >= 31.5 AND toFloat(area.value) <= 38.5
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2473,8 +2408,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
@@ -2486,7 +2420,7 @@ MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
 MATCH (p)-[:HAS_AREA]->(area:Area)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
 WHERE toLower(ptype.name) CONTAINS ""nhà""
-  AND toFloat(area.value) >= 36 AND toFloat(area.value) <= 44
+  AND toFloat(area.value) >= 31.5 AND toFloat(area.value) <= 38.5
   AND (
     toLower(ls.name) CONTAINS ""sổ đỏ"" OR
     toLower(ls.name) CONTAINS ""chính chủ"" OR
@@ -2508,8 +2442,7 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) 
-    WHERE x CONTAINS ""sổ đỏ"" OR x CONTAINS ""chính chủ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
@@ -2573,7 +2506,7 @@ RETURN DISTINCT
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""đại học thương mại""] AS near_facilities,
+  COLLECT(DISTINCT toLower(fac.name))  AS near_facilities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2604,7 +2537,7 @@ RETURN DISTINCT
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""đại học thương mại""] AS near_facilities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -2702,37 +2635,6 @@ RETURN DISTINCT
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Tìm nhà 5 tầng ở khu Hai Bà Trưng hoặc gần Đại học Bách Khoa Hà Nội.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
-MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
-MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
-WHERE toLower(design.name) CONTAINS ""5 tầng""
-  AND toLower(fac.name) CONTAINS ""đại học bách khoa""
-OPTIONAL MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
-OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
-OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
-OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
-OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
-OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
-OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
-OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
-OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
-RETURN DISTINCT
-  p.id AS id,
-  d.name AS district_name,
-  ptype.name AS property_type,
-  COLLECT(DISTINCT toLower(design.name)) AS house_design,
-  toFloat(area.value) AS area_m2,
-  toFloat(price.value) AS price_ty_vnd,
-  addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""đại học bách khoa""] AS near_facilities,
-  head(COLLECT(DISTINCT cn.name)) AS contact_name,
-  head(COLLECT(DISTINCT cp.number)) AS contact_phone
-ORDER BY toFloat(price.value) ASC
-LIMIT 10"
 "Tìm nhà 5 tầng gần đại học bách khoa","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
@@ -2764,7 +2666,7 @@ RETURN DISTINCT
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Có căn nhà 3 tầng nào tại quận Cầu Giấy đầy đủ nội thất và có sổ đỏ chính chủ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+"Có căn nhà 5 tầng nào tại quận Cầu Giấy đầy đủ nội thất và có sổ đỏ chính chủ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -2795,14 +2697,14 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Tôi cần mua nhà 3 tầng ở Cầu Giấy có sổ nội thất trang bị sẵn.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+"Tôi cần mua nhà 5 tầng ở Cầu Giấy có sổ nội thất trang bị sẵn.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -2833,14 +2735,14 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Tìm nhà 3 tầng tại Cầu Giấy được trang bị nội thất đầy đủ pháp lý có sổ đỏ chính chủ.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+"Tìm nhà 5 tầng tại Cầu Giấy được trang bị nội thất đầy đủ pháp lý có sổ đỏ chính chủ.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -2871,14 +2773,14 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Cho tôi xem các căn nhà 3 tầng tại Cầu Giấy đầy đủ tiện nghi pháp lý có sổ.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+"Cho tôi xem các căn nhà 5 tầng tại Cầu Giấy đầy đủ tiện nghi pháp lý có sổ.","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -2909,14 +2811,14 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Có nhà 3 tầng nào ở Cầu Giấy đầy đủ tiện nghi nội thất có sổ đỏ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+"Có nhà 5 tầng nào ở Cầu Giấy đầy đủ tiện nghi nội thất có sổ đỏ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -2947,14 +2849,14 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10"
-"Tìm nhà 3 tầng tại cầu giấy nội thất đầy đủ và có sổ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+"Tìm nhà 5 tầng tại cầu giấy nội thất đầy đủ và có sổ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
 MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
 MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
 MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
@@ -2985,9 +2887,9 @@ RETURN DISTINCT
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  [x IN COLLECT(DISTINCT toLower(ls.name)) WHERE x CONTAINS ""sổ""] AS legal_status,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  [x IN COLLECT(DISTINCT toLower(amen.name)) WHERE x CONTAINS ""nội thất""] AS internal_amenities,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -3413,7 +3315,7 @@ RETURN DISTINCT
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""công viên""] AS near_facilities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -3793,7 +3695,7 @@ RETURN DISTINCT
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""viện 108""] AS near_facilities,
+  COLLECT(DISTINCT toLower(fac.name))AS near_facilities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -3827,7 +3729,7 @@ RETURN DISTINCT
   COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
   COLLECT(DISTINCT toLower(dir.name)) AS direction,
   COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  [x IN COLLECT(DISTINCT toLower(fac.name)) WHERE x CONTAINS ""viện 108""] AS near_facilities,
+  COLLECT(DISTINCT toLower(fac.name))AS near_facilities,
   head(COLLECT(DISTINCT cn.name)) AS contact_name,
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
@@ -4683,3 +4585,865 @@ RETURN DISTINCT
   head(COLLECT(DISTINCT cp.number)) AS contact_phone
 ORDER BY toFloat(price.value) ASC
 LIMIT 10;"
+"Tìm biệt thự gần Hồ Tây dưới 30 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+WHERE toLower(ptype.name) CONTAINS ""biệt thự""
+  AND toLower(fac.name) CONTAINS ""hồ tây""
+  AND toFloat(price.value) <= 30
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà tại Hà Đông giá dưới 3 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(d.name) CONTAINS ""hà đông""
+  AND toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) <= 5
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà riêng ở Hoàng mai giá 5 đến 6 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hoàng mai""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) >= 5
+  AND toFloat(price.value) <= 6
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà cho gia đình ở Hoàng mai giá 5 đến 6 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hoàng mai""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) >= 5
+  AND toFloat(price.value) <= 6
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Có nhà đất tại Bắc Từ Liêm giá rẻ hơn 4 tỷ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""bắc từ liêm""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE (toLower(ptype.name) CONTAINS ""nhà"" OR toLower(ptype.name) CONTAINS ""đất"")
+  AND toFloat(price.value) < 4
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà mặt phố ở Hai Bà Trưng giá khoảng 7 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hai bà trưng""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) >= 6.5
+  AND toFloat(price.value) <= 7.5
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà riêng ở Hai Bà Trưng giá khoảng 7 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hai bà trưng""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) >= 6.5
+  AND toFloat(price.value) <= 7.5
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Mua nhà tại Nam Từ Liêm giá 6–8 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""nam từ liêm""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) >= 6
+  AND toFloat(price.value) <= 8
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Mua nhà đất tại Nam Từ Liêm giá 6–8 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""nam từ liêm""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(price.value) >= 6
+  AND toFloat(price.value) <= 8
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Cho tôi xem biệt thự ở Tây Hồ giá dưới 20 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""tây hồ""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""biệt thự""
+  AND toFloat(price.value) < 15
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Có nhà ở gần ngã tư sở khoảng dưới 9 tỷ không","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toLower(fac.name) CONTAINS ""ngã tư sở""
+  AND toFloat(price.value) < 9
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà 40m2 tại Thanh Xuân giá 4 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""thanh xuân""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) >= 36
+  AND toFloat(area.value) <= 44
+  AND toFloat(price.value) >= 3.5
+  AND toFloat(price.value) <= 4.5
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Có nhà diện tích lớn hơn 60m ở Cầu Giấy khoảng 6 tỷ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) >= 60
+  AND toFloat(price.value) >= 5.5
+  AND toFloat(price.value) <= 6.5
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Mua nhà dưới 50m2 tại Hà Đông dưới 5 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hà đông""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) <= 55
+  AND toFloat(price.value) < 5
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Nhà 35m2 ở Hoàng Mai giá 3 tỷ còn không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hoàng mai""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) >= 31.5
+  AND toFloat(area.value) <= 38.5
+  AND toFloat(price.value) >= 2.5
+  AND toFloat(price.value) <= 3.5
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Cho xem nhà lớn hơn 72m2 tại Long Biên giá tầm 7 tỷ đổ xuống","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) >= 72
+  AND toFloat(price.value) <= 7
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Nhà 45m2 tại Đống Đa giá 4 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""đống đa""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) >= 45
+  AND toFloat(area.value) <= 55
+  AND toFloat(price.value) >= 3.5
+  AND toFloat(price.value) <= 4.5
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Cần biệt thự lớn hơn 70m2 ở Tây Hồ giá dưới 20 tỷ","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""tây hồ""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""biệt thự""
+  AND toFloat(area.value) > 70
+  AND toFloat(price.value) < 20
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Có nhà nhỏ 30m2 tại Ba Đình giá dưới 4 tỷ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""ba đình""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toFloat(area.value) >= 27
+  AND toFloat(area.value) <= 33
+  AND toFloat(price.value) < 4
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Có nhà hướng Tây tứ trạch 30- 50m2 tại Long Biên không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toLower(dir.name) CONTAINS ""tây""
+  AND toFloat(area.value) >= 30
+  AND toFloat(area.value) <= 50
+OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà sổ đỏ có phòng thờ và sân phơi tại Hai Bà Trưng","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hai bà trưng""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND (
+    toLower(ls.name) CONTAINS ""sổ đỏ"" 
+    OR toLower(ls.name) CONTAINS ""sổ đỏ chính chủ"" 
+    OR toLower(ls.name) CONTAINS ""chính chủ""
+  )
+  AND (
+    toLower(design.name) CONTAINS ""phòng thờ"" 
+    OR toLower(amen.name) CONTAINS ""phòng thờ""
+  )
+  AND (
+    toLower(design.name) CONTAINS ""sân phơi"" 
+    OR toLower(amen.name) CONTAINS ""sân phơi""
+  )
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà gần đại học Bách Khoa ở Hai Bà Trưng","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hai bà trưng""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toLower(fac.name) CONTAINS ""đại học bách khoa""
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Tìm nhà gần bệnh viện 108 tại Hai Bà Trưng","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hai bà trưng""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND (toLower(fac.name) CONTAINS ""bệnh viện 108"" OR
+toLower(fac.name) CONTAINS ""viện 108"")
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+OPTIONAL MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Có nhà 4 tầng sổ đỏ chính chủ ở Long Biên giá dưới 12 tỷ không?","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""long biên""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toLower(design.name) CONTAINS ""4 tầng""
+  AND (
+    toLower(ls.name) CONTAINS ""sổ đỏ""
+    OR toLower(ls.name) CONTAINS ""chính chủ""
+    OR toLower(ls.name) CONTAINS ""sổ đỏ chính chủ""
+  )
+  AND toFloat(price.value) <= 12
+OPTIONAL MATCH (p)-[:HAS_AREA]->(area:Area)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Mua nhà 4 tầng diện tích hơn 40m2 ở Hoàng Mai đầy đủ nội thất","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""hoàng mai""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toLower(design.name) CONTAINS ""4 tầng""
+  AND toFloat(area.value) >= 40
+  AND (
+    toLower(amen.name) CONTAINS ""đầy đủ nội thất""
+    OR toLower(amen.name) CONTAINS ""nội thất đầy đủ""
+    OR toLower(amen.name) CONTAINS ""đầy đủ""
+    OR toLower(amen.name) CONTAINS ""nội thất""
+  )
+OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"Cần nhà 5 tầng diện tích lớn hơn 50m2 giá khoảng dưới 15 tỷ tại Cầu Giấy","MATCH (:City {name:""bất động sản hà nội""})-[:HAS_LOCATION]->(d:District {name:""cầu giấy""})-[:HAS_PROPERTY]->(p:Property)
+MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)
+MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
+MATCH (p)-[:HAS_AREA]->(area:Area)
+MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
+WHERE toLower(ptype.name) CONTAINS ""nhà""
+  AND toLower(design.name) CONTAINS ""5 tầng""
+  AND toFloat(area.value) > 50
+  AND toFloat(price.value) <= 15
+OPTIONAL MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
+OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
+OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
+OPTIONAL MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)
+OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+RETURN DISTINCT
+  p.id AS id,
+  d.name AS district_name,
+  ptype.name AS property_type,
+  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  toFloat(area.value) AS area_m2,
+  toFloat(price.value) AS price_ty_vnd,
+  addr.name AS full_address,
+  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
+  COLLECT(DISTINCT toLower(dir.name)) AS direction,
+  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
+  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
+  head(COLLECT(DISTINCT cn.name)) AS contact_name,
+  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+ORDER BY toFloat(price.value) ASC
+LIMIT 10"
+"",""

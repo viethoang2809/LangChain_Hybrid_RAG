@@ -62,7 +62,7 @@ class GraphQueryPipeline:
         )
 
     # Gửi prompt đến LLM để sinh Cypher
-    def generate_cypher(self, user_query: str, k: int = 3) -> str:
+    def generate_cypher(self, user_query: str, k: int = 10) -> str:
         """Dùng LLM để sinh Cypher từ câu hỏi"""
         # Build prompt từ nl2cypher
         prompt = self.retriever.build_prompt(user_query, k=k)

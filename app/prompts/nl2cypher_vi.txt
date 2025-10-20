@@ -31,49 +31,25 @@ Không được trả lời thêm bất kỳ giải thích nào ngoài đoạn m
 ```
 
 ---
-## QUY TẮC THỨ TỰ MATCH TRƯỚC WHERE
-Đây là phần cực kỳ quan trọng
-Nếu câu hỏi có nhắc đến thông tin nào, **phải MATCH node tương ứng trước khi dùng trong WHERE**.
+## QUY TẮC THỨ TỰ MATCH VÀ OPTIONAL MATCH TRƯỚC WHERE
+Đây là phần cực kỳ quan trọng, bắt buộc phải tuân thủ tuyệt đối để sinh ra truy vấn Cypher đúng cấu trúc và không bị đảo lộn thứ tự.
 
-| Nhóm thông tin | MATCH bắt buộc trước WHERE | Ví dụ điều kiện WHERE tương ứng |
-|----------------|-----------------------------|----------------------------------|
-| Khu vực / Quận huyện | `MATCH (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)` | `WHERE toLower(d.name) CONTAINS "thanh xuân"` |
-| Loại nhà (nhà, đất, chung cư, biệt thự, …) | `MATCH (p)-[:HAS_PROPERTY_TYPE]->(ptype:PropertyType)` | `WHERE toLower(ptype.name) CONTAINS "nhà"` |
-| Thiết kế nhà (3 tầng, 5 tầng, …) | `MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)` | `WHERE toLower(design.name) CONTAINS "5 tầng"` |
-| Diện tích | `MATCH (p)-[:HAS_AREA]->(area:Area)` | `WHERE toFloat(area.value) BETWEEN 40 AND 60` |
-| Giá bán | `MATCH (p)-[:HAS_PRICE]->(price:PriceVND)` | `WHERE toFloat(price.value) <= 5` |
-| Pháp lý (sổ đỏ, chính chủ, …) | `MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)` | `WHERE toLower(ls.name) CONTAINS "sổ đỏ"` |
-| Hướng nhà | `MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)` | `WHERE toLower(dir.name) CONTAINS "tây"` |
-| Tiện ích nội thất | `MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)` | `WHERE toLower(amen.name) CONTAINS "nội thất"` |
-| Gần tiện ích (chợ, trường, đại học, …) | `MATCH (p)-[:NEAR_FACILITY]->(fac:Facility)` | `WHERE toLower(fac.name) CONTAINS "đại học bách khoa"` |
-| Địa chỉ cụ thể | `MATCH (p)-[:LOCATED_AT]->(addr:Address)` | `WHERE toLower(addr.name) CONTAINS "phố vọng"` |
-| Liên hệ / chủ nhà | `MATCH (p)-[:HAS_CONTACT]->(c:Contact)` và `MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)` | Dùng khi truy vấn chi tiết căn (`id = ...`) |
+Nếu câu hỏi có nhắc đến thông tin nào, phải MATCH node tương ứng trước khi dùng trong WHERE.
+Không được phép thay đổi thứ tự MATCH dù trong câu hỏi có đề cập điều kiện nào.
 
-### Nguyên tắc:
-- Không bao giờ được dùng WHERE cho biến chưa MATCH.  
-- Nếu người dùng hỏi nhiều điều kiện (vd: diện tích + giá + hướng) → MATCH hết trước, rồi WHERE kết hợp.  
-- Các `OPTIONAL MATCH` khác chỉ thêm sau phần WHERE. 
-- Trước khi `RETURN`, **bắt buộc phải OPTIONAL MATCH đầy đủ** tất cả các biến trong schema (nếu chưa có).
-- Bắt buộc phải có "OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)" để liên kết với   "OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)"
-  và "OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)"
-- **Không được RETURN bất kỳ biến nào chưa MATCH hoặc OPTIONAL MATCH.** 
-  Ví dụ:
-  ```cypher
-  MATCH (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(d:District)-[:HAS_PROPERTY]->(p:Property)
-  MATCH (p)-[:HAS_DESIGN]->(design:HouseDesign)
-  MATCH (p)-[:HAS_LEGAL_STATUS]->(ls:LegalStatus)
-  MATCH (p)-[:HAS_AREA]->(area:Area)
-  WHERE toLower(design.name) CONTAINS "5 tầng"
-    AND toLower(ls.name) CONTAINS "sổ đỏ"
-    AND toFloat(area.value) BETWEEN 35 AND 45
-  OPTIONAL MATCH (p)-[:HAS_PRICE]->(price:PriceVND)
-  OPTIONAL MATCH (p)-[:HAS_DIRECTION]->(dir:Direction)
-  OPTIONAL MATCH (p)-[:HAS_AMENITY]->(amen:Amenity)
-  OPTIONAL MATCH (p)-[:LOCATED_AT]->(addr:Address)
-  OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
-  OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
-  OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+## NGUYÊN TẮC BẮT BUỘC
 
+Không bao giờ được dùng WHERE cho biến chưa MATCH trước đó.
+Nếu người dùng hỏi nhiều điều kiện (vd: diện tích + giá + hướng) → MATCH đủ tất cả biến theo thứ tự trên, rồi mới WHERE kết hợp.
+Tất cả OPTIONAL MATCH khác chỉ thêm sau phần WHERE.
+Trước khi RETURN, phải OPTIONAL MATCH đầy đủ mọi node còn lại trong schema (nếu chưa MATCH).
+Không được RETURN bất kỳ biến nào chưa từng MATCH hoặc OPTIONAL MATCH.
+Bắt buộc có:
+OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
+OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
+Không được RETURN bất kỳ biến nào chưa MATCH hoặc OPTIONAL MATCH.
+  
 ---
 
 ## Quy tắc hiểu ngữ nghĩa:
@@ -84,10 +60,19 @@ Nếu câu hỏi có nhắc đến thông tin nào, **phải MATCH node tương 
 - **property_type.name:** “nhà”, “đất”, “chung cư”, “biệt thự”, “liền kề”, “shophouse”, “chung cư mini”, “văn phòng”.  
   → `toLower(property_type.name) CONTAINS "<từ khóa>"`.
 
+
 - **area.value:**  
-  - “50m2”, “~50m2”, “tầm 45–55m2” → `BETWEEN ±10%`.  
-  - “>70m2” hoặc “trên 70m2” → `>= 70`.  
-  - “<50m2” hoặc “dưới 50m2” → `<= 50`.
+  - “50m2”, “~50m2”, “tầm 45–55m2” → dùng khoảng ±10%:
+    `toFloat(area.value) >= (X * 0.9) AND toFloat(area.value) <= (X * 1.1)`
+  - “>70m2” hoặc “trên 70m2” → `toFloat(area.value) >= 70`
+  - “<50m2” hoặc “dưới 50m2” → `toFloat(area.value) <= 50`
+  - Nếu câu có chứa “hơn X m2”, “trên X m2”, “lớn hơn X m2” → 
+    chỉ dùng điều kiện: `toFloat(area.value) >= X`
+    (Không được tự nội suy hoặc tăng giá trị X)
+  - **Lưu ý:** Neo4j không hỗ trợ cú pháp `BETWEEN ... AND ...`, phải luôn dùng:
+    `toFloat(area.value) >= A AND toFloat(area.value) <= B`
+
+
 
 - **total_price_vnd.value:**  
   - “2–3 tỷ” → `BETWEEN 2 AND 3`.  
