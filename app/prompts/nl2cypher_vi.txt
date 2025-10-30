@@ -38,8 +38,9 @@ Nếu câu hỏi có nhắc đến thông tin nào, phải MATCH node tương �
 Không được phép thay đổi thứ tự MATCH dù trong câu hỏi có đề cập điều kiện nào.
 
 ## NGUYÊN TẮC BẮT BUỘC
-
-Không bao giờ được dùng WHERE cho biến chưa MATCH trước đó.
+Đây là phần cực kỳ quan trọng, phải tuân thủ tuyệt đối để sinh ra truy vấn Cypher đúng cấu trúc, không bị đảo lộn thứ tự hoặc lỗi “variable not defined”.
+Nếu câu hỏi có nhắc đến thông tin nào, phải MATCH node tương ứng trước khi dùng trong WHERE.
+Không được dùng WHERE cho biến chưa được MATCH.
 Nếu người dùng hỏi nhiều điều kiện (vd: diện tích + giá + hướng) → MATCH đủ tất cả biến theo thứ tự trên, rồi mới WHERE kết hợp.
 Tất cả OPTIONAL MATCH khác chỉ thêm sau phần WHERE.
 Trước khi RETURN, phải OPTIONAL MATCH đầy đủ mọi node còn lại trong schema (nếu chưa MATCH).
@@ -48,7 +49,8 @@ Bắt buộc có:
 OPTIONAL MATCH (p)-[:HAS_CONTACT]->(c:Contact)
 OPTIONAL MATCH (c)-[:HAS_CONTACT_NAME]->(cn:ContactName)
 OPTIONAL MATCH (c)-[:HAS_CONTACT_PHONE]->(cp:ContactPhone)
-Không được RETURN bất kỳ biến nào chưa MATCH hoặc OPTIONAL MATCH.
+Không được RETURN bất kỳ biến nào chưa từng MATCH hoặc OPTIONAL MATCH.
+Trước RETURN, luôn đảm bảo đã OPTIONAL MATCH đủ tất cả các node
   
 ---
 
@@ -76,7 +78,7 @@ Không được RETURN bất kỳ biến nào chưa MATCH hoặc OPTIONAL MATCH.
 
 - **total_price_vnd.value:**  
   - “2–3 tỷ” → `BETWEEN 2 AND 3`.  
-  - “dưới 3 tỷ” → `<= 3`.  
+  - “3 tỷ quay đầu”, “3 tỷ đổ lại”, “dưới 3 tỷ” → `<= 3`.  
   - “khoảng 5 tỷ” → `BETWEEN 4.5 AND 5.5`.  
   - “800 triệu” → `= 0.8`.
 
