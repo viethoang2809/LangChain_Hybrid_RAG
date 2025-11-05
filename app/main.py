@@ -329,13 +329,13 @@ def main():
                     # === CHAT / LISTING / COMPARE / ANALYZE ===
                     history_data = load_chat_history(limit=10)
 
-                    # 1️⃣ Lấy ngữ cảnh hội thoại gần nhất (session)
+                    # 1 Lấy ngữ cảnh hội thoại gần nhất (session)
                     session_history = ""
                     for msg in st.session_state.chat_ui[-6:]:
                         role = "Khách hàng" if msg["role"] == "user" else "Tư vấn viên"
                         session_history += f"{role}: {msg['content']}\n"
 
-                    # 2️⃣ Lấy dữ liệu thật từ chat_history
+                    # 2 Lấy dữ liệu thật từ chat_history
                     long_context = ""
                     vietmap_context = ""
 
@@ -345,7 +345,7 @@ def main():
                         raw = h.get("raw_text", "")
                         long_context += f"💬 Q: {q}\n🤖 A: {a}\n📄 Dữ liệu gốc:\n{raw}\n\n"
 
-                        # --- Thêm VietMap context theo nhóm tiện ích ---
+                        # Thêm VietMap context theo nhóm tiện ích
                         props = h.get("properties", [])
                         if props:
                             for p in props:
@@ -379,10 +379,7 @@ def main():
                                             vietmap_context += f"    • {name} ({dist} km)\n"
                                 vietmap_context += "\n"
 
-                    # =====================================================
-                    # 3️⃣ Chọn model & prompt theo intent
-                    # =====================================================
-
+                    # 3 Chọn model & prompt theo intent
                     if intent == "LISTING":
                         model = OPENAI_MODEL_NORMAL
                         tone = (
@@ -485,7 +482,7 @@ def main():
 
 
  
-    # GIAO DIỆN TRUY VẤN THƯỜNG (y nguyên bản gốc)
+    # GIAO DIỆN TRUY VẤN THƯỜNG
     user_query = st.text_input(
         "💬 Nhập câu hỏi của bạn:",
         placeholder="Ví dụ: Tìm nhà 5 tầng sổ đỏ chính chủ tại Thanh Xuân"

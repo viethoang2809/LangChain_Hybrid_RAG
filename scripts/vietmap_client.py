@@ -8,7 +8,7 @@ VIETMAP_API_KEY = os.getenv("VIETMAP_API_KEY")
 BASE_URL = "https://maps.vietmap.vn/api"
 
 
-# ===================== 1️⃣ Lấy toạ độ =====================
+#Lấy toạ độ
 def get_coordinates(address: str):
     url = f"{BASE_URL}/search/v4"
     params = {"apikey": VIETMAP_API_KEY, "text": address, "display_type": 1}
@@ -30,7 +30,7 @@ def get_place_coordinates(ref_id: str):
     return {"lat": data.get("lat"), "lng": data.get("lng")}
 
 
-# ===================== 2️⃣ Tìm quanh theo keyword =====================
+#Tìm quanh theo keyword
 def search_nearby_by_keyword(lat: float, lng: float, keyword: str, max_results: int = 3):
     url = f"{BASE_URL}/search/v4"
     params = {
@@ -60,12 +60,12 @@ def search_nearby_by_keyword(lat: float, lng: float, keyword: str, max_results: 
     return results
 
 
-# ===================== 3️⃣ Gom nhóm tiện ích =====================
+#Gom nhóm tiện ích
 def get_nearby_places_grouped(address: str, max_results_per_group: int = 3):
     coords = get_coordinates(address)
     lat, lng = coords["lat"], coords["lng"]
 
-    # ✅ Bộ từ khóa chính bạn muốn
+    # Bộ từ khóa chính bạn muốn
     MAIN_KEYWORDS = {
         "hospital": "bệnh viện",
         "primary_school": "tiểu học",
@@ -88,7 +88,7 @@ def get_nearby_places_grouped(address: str, max_results_per_group: int = 3):
     }
 
 
-# ===================== 4️⃣ Test quanh Đại học Bách Khoa =====================
+#Test quanh Đại học Bách Khoa
 if __name__ == "__main__":
     address = "Đại học Bách Khoa Hà Nội"
     result = get_nearby_places_grouped(address)

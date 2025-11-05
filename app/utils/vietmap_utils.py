@@ -1,8 +1,6 @@
 # app/utils/vietmap_utils.py
-# ===============================================================
 # Các hàm gọi VietMap API: lấy toạ độ, địa điểm xung quanh,
 # và cập nhật enrichment trực tiếp vào chat_history.jsonl
-# ===============================================================
 
 import os
 import re
@@ -12,12 +10,18 @@ from dotenv import load_dotenv
 
 # --- Load API key từ .env ---
 load_dotenv()
-VIETMAP_API_KEY = os.getenv("VIETMAP_API_KEY")
+
+def get_var(key, default=None, section="general"):
+    try:
+        return st.secrets[section].get(key, default)
+    except Exception:
+        return os.getenv(key, default)
+    
+VIETMAP_API_KEY = get_var("VIETMAP_API_KEY")
 BASE_URL = "https://maps.vietmap.vn/api"
 
-# ===============================================================
-# 1️⃣ HÀM CƠ BẢN: GỌI API
-# ===============================================================
+
+# HÀM CƠ BẢN: GỌI API
 def _get(url: str, params: dict):
     """Gọi API VietMap với error handling."""
     res = requests.get(url, params=params, timeout=15)
@@ -49,9 +53,8 @@ def get_place_detail(ref_id: str):
         "district": data.get("district", ""),
     }
 
-# ===============================================================
-# 2️⃣ TÌM ĐỊA ĐIỂM QUANH TỌA ĐỘ THEO TỪ KHÓA
-# ===============================================================
+
+# TÌM ĐỊA ĐIỂM QUANH TỌA ĐỘ THEO TỪ KHÓA
 def search_nearby_by_keyword(lat: float, lng: float, keyword: str, max_results: int = 3):
     """Tìm các địa điểm quanh toạ độ bằng keyword (ví dụ: bệnh viện, siêu thị, công viên...)."""
     url = f"{BASE_URL}/search/v4"
@@ -125,9 +128,8 @@ def get_nearby_places(lat: float, lng: float, radius_m: int = 1000, limit: int =
     return results
 
 
-# ===============================================================
-# 3️⃣ ENRICH 1 ĐỊA CHỈ
-# ===============================================================
+
+# ENRICH 1 ĐỊA CHỈ
 def enrich_address_with_vietmap(address: str, label: str):
     """Lấy lat/lng và các tiện ích xung quanh 1 địa chỉ."""
     try:
@@ -152,9 +154,8 @@ def enrich_address_with_vietmap(address: str, label: str):
         return {"label": label, "address": address, "error": str(e)}
 
 
-# ===============================================================
-# 4️⃣ ENRICH DÒNG CHAT MỚI NHẤT
-# ===============================================================
+
+# ENRICH DÒNG CHAT MỚI NHẤT
 def enrich_last_chat_record():
     """
     Đọc dòng cuối cùng trong data/chat_history.jsonl,
