@@ -27,3 +27,7 @@ streamlit>=1.36.0
 requests
 urllib3
 pydantic>=2.8.2
+
+googlemaps>=4.10.0
+geopy>=2.3.0
+

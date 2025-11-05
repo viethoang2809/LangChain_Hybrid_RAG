@@ -14,21 +14,21 @@ try:
     client = OpenAI(api_key=api_key)
 
     # 1 Test model chat
-    print("\n🧠 Đang test model chat:", model)
+    print("\nĐang test model chat:", model)
     chat_response = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": "Hello, are you working?"}],
     )
-    print("✅ Chat model trả lời:", chat_response.choices[0].message.content)
+    print("Chat model trả lời:", chat_response.choices[0].message.content)
 
     # 2 Test embedding
-    print("\n🔡 Đang test embedding:", embed_model)
+    print("\nĐang test embedding:", embed_model)
     emb_response = client.embeddings.create(
         model=embed_model,
         input="Xin chào Hà Nội, đây là test embedding."
     )
-    print("✅ Nhận được vector độ dài:", len(emb_response.data[0].embedding))
+    print("Nhận được vector độ dài:", len(emb_response.data[0].embedding))
 
-    print("\n🎉 OpenAI API hoạt động bình thường!")
+    print("\nOpenAI API hoạt động bình thường!")
 except Exception as e:
-    print("❌ Lỗi khi gọi API OpenAI:", str(e))
+    print("Lỗi khi gọi API OpenAI:", str(e))
