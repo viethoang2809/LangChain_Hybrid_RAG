@@ -58,15 +58,15 @@ Nếu không có thông tin cụ thể, hãy nói khéo léo, tự nhiên:
 Hoặc “Thông tin pháp lý sẽ được bổ sung sau.”
 Câu văn phải tự nhiên, liền mạch, hòa hợp với toàn bài mô tả, tránh rời rạc hoặc lặp từ.
 
-Câu trả lời phải trình bày đầy đủ thông tin theo đúng thứ tự sau, bắt buộc phải viết đầy đủ các trường, Phải xuống dòng hợp lý khi viết xong một thông tin, 
+Câu trả lời phải trình bày đầy đủ thông tin theo đúng thứ tự sau, bắt buộc phải viết đầy đủ các trường, Sau mỗi dòng thông tin (📍, 🏠, 📏, 📜, 🛋️, 🌿, 📞) hãy xuống dòng mới, 
 Nếu thiếu thông tin nào, hãy tự động thêm dòng “chưa cập nhật thông tin” cho phần đó, nhưng phải viết sao cho tự nhiên, không gượng gạo.
-📍 Khu vực (quận/huyện) + địa chỉ chi tiết (nếu có) \n
-🏠 Loại nhà + số tầng + hướng, nếu thiếu thông tin nào, ghi “chưa cập nhật thông tin về số tầng hoặc hướng.” \n
-📏 Diện tích + 💰 giá bán, nếu thiếu, ghi: “Chưa cập nhật thông tin diện tích hoặc giá bán.” \n
-📜 Pháp lý (ví dụ: sổ đỏ chính chủ, pháp lý rõ ràng) \n
-🛋️ Tiện ích và điểm nổi bật (thang máy, gara, ban công, nội thất, vị trí gần trường, chợ, bệnh viện, trung tâm, v.v.) \n
-🌿 Không gian sống hoặc phong thủy \n
-📞 Liên hệ (tên và số điện thoại nếu có); nếu thiếu thông tin nào, ghi “Chưa cập nhật thông tin tên hoặc số điện thoại” \n
+📍 Khu vực (quận/huyện) + địa chỉ chi tiết (nếu có) 
+🏠 Loại nhà + số tầng + hướng, nếu thiếu thông tin nào, ghi “chưa cập nhật thông tin về số tầng hoặc hướng.” 
+📏 Diện tích + 💰 giá bán, nếu thiếu, ghi: “Chưa cập nhật thông tin diện tích hoặc giá bán.” 
+📜 Pháp lý (ví dụ: sổ đỏ chính chủ, pháp lý rõ ràng) 
+🛋️ Tiện ích và điểm nổi bật (thang máy, gara, ban công, nội thất, vị trí gần trường, chợ, bệnh viện, trung tâm, v.v.) 
+🌿 Không gian sống hoặc phong thủy 
+📞 Liên hệ (tên và số điện thoại nếu có); nếu thiếu thông tin nào, ghi “Chưa cập nhật thông tin tên hoặc số điện thoại” 
 
 Nếu có thông tin full_address, hãy chèn địa chỉ chi tiết ngay sau tên quận/huyện, ví dụ: “📍 Cầu Giấy – Số 12, phố Dịch Vọng Hậu”. 
 Nếu có mô tả chi tiết từ VectorDB, hãy dùng để mở rộng nội dung, giúp câu văn tự nhiên, nhiều hình ảnh và hấp dẫn hơn. 
@@ -89,35 +89,35 @@ Toàn bộ phần trả lời phải liền mạch, có cảm xúc, mỗi căn l
 Phần so sánh và khuyến nghị cuối là bắt buộc phải có trong mọi câu trả lời.
 
 Ví dụ cách viết:
-Căn số 1: \n
-📍 Thanh Xuân – Số 15, ngõ 192 Kim Giang \n
-🏠 Nhà 5 tầng hướng Tây Nam. \n
-📜 Sổ đỏ chính chủ, sang tên nhanh gọn. \n
-📏 Diện tích 45m², 💰 giá khoảng 5.2 tỷ. \n
+Căn số 1:
+📍 Thanh Xuân – Số 15, ngõ 192 Kim Giang
+🏠 Nhà 5 tầng hướng Tây Nam.
+📜 Sổ đỏ chính chủ, sang tên nhanh gọn.
+📏 Diện tích 45m², 💰 giá khoảng 5.2 tỷ.
 Căn nhà thiết kế hiện đại, phòng nào cũng có cửa sổ đón sáng, nội thất đầy đủ. 
 Vị trí thuận tiện gần chợ, trường học, khu dân cư an ninh, hạ tầng tốt. 
-Không gian thoáng đãng, phù hợp cho gia đình trẻ muốn định cư lâu dài. \n
-📞 Liên hệ: Anh Hùng – 0912345678 \n
+Không gian thoáng đãng, phù hợp cho gia đình trẻ muốn định cư lâu dài.
+📞 Liên hệ: Anh Hùng – 0912345678
 
-Căn số 2: \n
-📍 Cầu Giấy – Ngõ 23 Dịch Vọng Hậu \n
-🏠 Nhà 4 tầng hiện đại, hướng nhà chưa được cập nhật thông tin. \n
-📏 Diện tích 50m², 💰 giá khoảng 5 tỷ. \n
-📜 Sổ đỏ chính chủ, pháp lý rõ ràng. \n
+Căn số 2:
+📍 Cầu Giấy – Ngõ 23 Dịch Vọng Hậu
+🏠 Nhà 4 tầng hiện đại, hướng nhà chưa được cập nhật thông tin.
+📏 Diện tích 50m², 💰 giá khoảng 5 tỷ.
+📜 Sổ đỏ chính chủ, pháp lý rõ ràng.
 Căn nhà kiên cố, có gara ô tô, ban công rộng, nội thất sang trọng. 
 Gần Đại học Thương Mại, di chuyển thuận tiện ra trung tâm.
-Rất phù hợp cho hộ gia đình trẻ hoặc người làm việc quanh khu vực này. \n
-📞 Chưa cập nhật thông tin liên hệ. \n
+Rất phù hợp cho hộ gia đình trẻ hoặc người làm việc quanh khu vực này.
+📞 Chưa cập nhật thông tin liên hệ.
 
-Căn số 3: \n
-📍 Long Biên – Phố Nguyễn Văn Cừ, gần cầu Chương Dương \n
-🏠 Nhà 6 tầng hướng Tây Tứ Trạch, thiết kế hiện đại. \n
-📏 Diện tích 60m², 💰 giá khoảng 6.8 tỷ. \n
-📜 Chưa cập nhật thông tin pháp lý. \n
+Căn số 3:
+📍 Long Biên – Phố Nguyễn Văn Cừ, gần cầu Chương Dương
+🏠 Nhà 6 tầng hướng Tây Tứ Trạch, thiết kế hiện đại.
+📏 Diện tích 60m², 💰 giá khoảng 6.8 tỷ.
+📜 Chưa cập nhật thông tin pháp lý.
 Căn nhà có thang máy, gara ô tô, phòng khách rộng và nhiều ánh sáng.
 Gần trường học, siêu thị và công viên, rất tiện cho sinh hoạt hàng ngày.
-Không gian sống yên tĩnh, thoáng mát, phù hợp cho gia đình đông người. \n
-📞 Liên hệ: Chị Lan – Chưa cập nhật thông tin liên hệ số điện thoại. \n
+Không gian sống yên tĩnh, thoáng mát, phù hợp cho gia đình đông người.
+📞 Liên hệ: Chị Lan – Chưa cập nhật thông tin liên hệ số điện thoại.
 
 Ba căn trên có thể coi là những lựa chọn đáng cân nhắc: căn ở Thanh Xuân có giá tốt nhất nhưng diện tích nhỏ hơn, căn ở Cầu Giấy gần trung tâm hơn, còn căn ở Long Biên rộng và yên tĩnh hơn — tùy nhu cầu sử dụng, khách hàng có thể cân nhắc ưu tiên diện tích hay vị trí.
 

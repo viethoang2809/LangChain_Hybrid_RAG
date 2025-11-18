@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 import sys
 from typing import List
+import re
 
 import streamlit as st
 import pandas as pd
@@ -59,31 +60,29 @@ def save_chat_record(query: str, answer: str, passages: List[Passage]):
     Lưu lịch sử hội thoại gồm:
     - Câu hỏi (query)
     - Câu trả lời (answer)
-    - Văn bản gốc (raw_text) trích từ các Passage của RAG
+    - Văn bản gốc (raw_text) có gắn thứ tự căn
     - Danh sách ID và nội dung từng Passage (để debug hoặc tư vấn lại)
 
     Dữ liệu được lưu vào: data/chat_history.jsonl
     Mỗi dòng là 1 JSON record (append mode)
     """
 
-    # Gộp toàn bộ text gốc từ các Passage đã chọn
-    raw_text = "\n\n".join(
-        [
-            f"(ID {p.id}) {p.text.strip()}"
-            for p in passages
-            if getattr(p, "text", None)
-        ]
-    )
+    # Gộp toàn bộ text gốc, thêm chỉ số thứ tự cho mỗi căn
+    raw_text_parts = []
+    for i, p in enumerate(passages, start=1):
+        if getattr(p, "text", None):
+            cleaned = p.text.strip().replace("\n", " ").strip()
+            raw_text_parts.append(f'Căn số {i}: "{cleaned}"')
 
-    # Ghi record theo thứ tự hợp lý: raw_text đặt ngay sau answer
+    raw_text = "\n\n".join(raw_text_parts)
+
+    # 🧩 Ghi record theo thứ tự hợp lý: raw_text đặt ngay sau answer
     record = {
         "timestamp": datetime.now().isoformat(timespec="seconds"),
         "query": query,
         "answer": answer,
-        "raw_text": raw_text,  # 👈 để ngay sau answer cho dễ đọc & dễ truy xuất
-        "property_ids": [
-            p.id for p in passages if getattr(p, "id", None)
-        ],
+        "raw_text": raw_text,
+        "property_ids": [p.id for p in passages if getattr(p, "id", None)],
         "passages": [
             {"id": p.id, "text": p.text}
             for p in passages
@@ -91,17 +90,86 @@ def save_chat_record(query: str, answer: str, passages: List[Passage]):
         ],
     }
 
-    # Ghi append từng dòng JSON
+    # Ghi append từng dòng JSON vào file lịch sử
     os.makedirs(os.path.dirname(HISTORY_PATH), exist_ok=True)
     with open(HISTORY_PATH, "a", encoding="utf-8") as f:
         f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
-def load_chat_history(limit: int = 2):
+
+def load_chat_history(limit: int):
     if not os.path.exists(HISTORY_PATH):
         return []
     with open(HISTORY_PATH, "r", encoding="utf-8") as f:
         lines = f.readlines()[-limit:]
     return [json.loads(l) for l in lines]
+
+
+# ====== HÀM THÊM MỚI: Rewrite query cho "căn tương tự" ======
+def rewrite_similar_query(
+    client: OpenAI,
+    user_input: str,
+    history_data: List[dict],
+    session_messages: List[dict]
+) -> str:
+    """
+    Sinh câu truy vấn mới khi người dùng yêu cầu tìm căn tương tự.
+    Dựa vào:
+    - Truy vấn gốc (previous query)
+    - Câu trả lời gốc (previous answer)
+    - 6 tin nhắn hội thoại mới nhất
+    Không dùng raw_text để tránh nhiễu.
+    """
+
+    if not history_data:
+        return user_input
+
+    last = history_data[-1]
+    prev_query = last.get("query", "")
+    prev_answer = last.get("answer", "")
+
+    # Lấy 10 tin nhắn gần nhất trong UI
+    session_context = ""
+    for m in session_messages[-10:]:
+        role = "Khách hàng" if m["role"] == "user" else "Tư vấn viên"
+        session_context += f"{role}: {m['content']}\n"
+
+    prompt = f"""
+    Bạn là hệ thống TÁI VIẾT câu truy vấn bất động sản để tìm thêm các căn TƯƠNG TỰ.
+
+    --- NGỮ CẢNH HỘI THOẠI (10 tin gần nhất) ---
+    {session_context}
+
+    --- TRUY VẤN BAN ĐẦU CỦA KHÁCH ---
+    "{prev_query}"
+
+    --- CÂU TRẢ LỜI ĐÃ GỬI TRƯỚC ĐÓ ---
+    "{prev_answer}"
+
+    --- CÂU HỎI MỚI CỦA KHÁCH ---
+    "{user_input}"
+
+    --- YÊU CẦU ---
+    - Sinh ra MỘT câu truy vấn tiếng Việt tự nhiên để tìm thêm căn tương tự.
+    - Giữ lại các tiêu chí quan trọng: khu vực, tầng, diện tích, tầm giá, tiện ích.
+    - Mở rộng nhẹ phạm vi nếu cần.
+    - Không mô tả, không phân tích, KHÔNG GIẢI THÍCH.
+    - Chỉ trả về duy nhất 1 câu truy vấn.
+    """
+
+    try:
+        resp = client.chat.completions.create(
+            model=OPENAI_MODEL_NORMAL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+        )
+        new_query = resp.choices[0].message.content.strip()
+        if not new_query:
+            return user_input
+        return new_query.replace("\n", " ").strip()
+
+    except Exception:
+        return user_input
+
 
 
 
@@ -143,7 +211,7 @@ def main():
         if "hybrid_pipeline" not in st.session_state:
             with st.spinner("⏳ Đang tải pipeline Hybrid RAG (Neo4j + FAISS)..."):
                 st.session_state.hybrid_pipeline = HybridRetrieverParallel()
-                st.success("✅ Đã tải xong pipeline RAG!")
+                st.success("Đã tải xong pipeline RAG!")
         hybrid = st.session_state.hybrid_pipeline
         vclient = hybrid.vector
 
@@ -219,11 +287,11 @@ def main():
 
                 #Lấy ngữ cảnh hội thoại gần nhất (session)
                 session_history = ""
-                for msg in st.session_state.chat_ui[-3:]:
+                for msg in st.session_state.chat_ui[-10:]:
                     role = "Khách hàng" if msg["role"] == "user" else "Tư vấn viên"
                     session_history += f"{role}: {msg['content']}\n"
 
-                # === PHÂN LOẠI Ý ĐỊNH (chuẩn, chi tiết)
+                # === PHÂN LOẠI Ý ĐỊNH (thêm SEARCH_SIMILAR) ===
                 intent_prompt = f"""
                 Bạn là **bộ phân loại ý định câu hỏi** cho chatbot tư vấn bất động sản tại Hà Nội.
 
@@ -235,12 +303,12 @@ def main():
                 **Ngữ cảnh hội thoại gần đây:**
                 {session_history}
 
-                Hãy dựa vào câu hỏi và ngữ cảnh để phân loại thành đúng **1 trong 4 loại** sau:
+                Hãy dựa vào câu hỏi và ngữ cảnh để phân loại thành đúng **1 trong 5 loại** sau:
                 1. **SEARCH** — người dùng muốn tìm thêm căn nhà mới (chưa từng được đề cập trước đó).  
                 Ví dụ:
                 - "Tìm nhà 5 tầng ở Cầu Giấy"
                 - "Có căn nào dưới 5 tỷ ở Hà Đông không?"
-                - "Cho tôi thêm vài căn khu Thanh Xuân"
+                - "Cho tôi vài căn khu Thanh Xuân"
 
                 2. **LISTING** — người dùng hỏi **các tiện ích hoặc địa điểm cụ thể quanh 1 căn đã có**.  
                 Ví dụ:
@@ -255,7 +323,6 @@ def main():
                 - "Căn nào gần trung tâm hơn?"
                 - "Nếu để đầu tư thì nên chọn căn nào trong 3 căn trên?"
 
-
                 4. **ANALYZE** — người dùng muốn **đánh giá tổng quan, tư vấn sâu hoặc phân tích tiềm năng**.  
                 Ví dụ:
                 - "Khu Thanh Xuân có tiềm năng tăng giá không?"
@@ -263,23 +330,56 @@ def main():
                 - "Căn số 1 có đáng để mua không ?"
                 - "Khu vực này có đáng sống không?"
                 - "Nếu ở gia đình 4 người thì căn nào hợp lý hơn?"
+                - "Tư vấn chi tiết căn số 1"
+
+                5. **SEARCH_SIMILAR** — người dùng muốn tìm **các căn khác tương tự với các căn đã xem**.  
+                Ví dụ:
+                - "Cho tôi xem thêm các căn tương tự"
+                - "Cho tôi xem thêm các căn tương tự ba căn trên tại cầu giấy"
+                - "Có nhà khác khu vực này không?"
+                - "Còn căn nào giống căn số 1 không?"
+                - "Thêm căn nào tầm giá như vậy ở khu này"
+                - "Có lựa chọn nào nữa giống mấy căn trên không?"
+
+                6. **RECALL** — người dùng muốn **xem lại hoặc nhắc lại thông tin một căn đã tư vấn trước đó** (không tìm căn mới).  
+                Ví dụ:
+                - "Tư vấn lại cho tôi căn số 1 hôm qua hỏi"
+                - "Nhắc lại giúp tôi căn thứ 2"
+                - "Cho tôi xem lại căn ở Phan Văn Trường lúc nãy"
+                - "Căn đầu tiên hôm qua là như nào nhỉ?"
 
                 ---
 
                 **QUY TẮC PHÂN LOẠI:**
-                - Nếu câu hỏi nói về *tìm căn mới* → luôn là **SEARCH**.
-                - Nếu có từ khóa "gần", "xung quanh", "có gì", "liệt kê", "ở quanh" → **LISTING**.
-                - Nếu có từ khóa "so sánh", "căn 1", "căn 2", "căn thứ", "nên chọn", "căn nào" → **COMPARE**.
-                - Nếu câu hỏi thiên về "đánh giá", "phù hợp", "tiềm năng", "đáng mua", "đáng sống" → **ANALYZE**.
-                - Nếu câu hỏi có nhiều đặc điểm, chọn loại có **độ chuyên biệt cao hơn** theo thứ tự ưu tiên:
-                `COMPARE > LISTING > ANALYZE > SEARCH`.
+                - Nếu câu hỏi yêu cầu *tìm căn mới* với tiêu chí rõ ràng, và *không nhắc lại căn đã tư vấn* → **SEARCH**.
+
+                - Nếu câu hỏi đề cập đến *tiện ích, địa điểm, môi trường, khoảng cách, xung quanh* của một căn đã có 
+                (bao gồm từ khoá: "gần", "xung quanh", "quanh đây", "có gì", "liệt kê") → **LISTING**.
+
+                - Nếu câu hỏi có *so sánh trực tiếp* giữa hai hoặc nhiều căn (từ khoá: "so sánh", "căn nào", "giữa căn 1 và căn 2",
+                "tốt hơn", "gần hơn", "nên chọn") → **COMPARE**.
+
+                - Nếu câu hỏi yêu cầu *đánh giá*, *nhận định*, *tư vấn chi tiết*,, *phân tích tiềm năng*, *mức độ phù hợp*, *đáng mua hay không* 
+                (từ khoá: "đáng mua", "phù hợp không", "tiềm năng", "đáng sống", "chi tiết", "kỹ") → **ANALYZE**.
+
+                - Nếu câu hỏi đề nghị *tìm thêm các căn tương tự*, *các lựa chọn giống căn đang xem*, hoặc 
+                *mở rộng danh sách tương tự* (từ khoá: "tương tự", "giống căn", "căn khác kiểu như", "thêm lựa chọn") → **SEARCH_SIMILAR**.
+
+                - Nếu câu hỏi yêu cầu *xem lại / nhắc lại* một hoặc nhiều căn đã tư vấn,
+                  đặc biệt khi có các từ khoá: "xem lại", "nhắc lại", "tư vấn lại", "hôm qua", "lúc nãy",
+                  kèm theo số thứ tự căn (ví dụ: "căn 1", "căn số 2", "căn đầu tiên") → **RECALL**.
+
+                - Nếu câu hỏi chứa nhiều đặc điểm thuộc nhiều loại, hãy ưu tiên phân loại theo mức độ đặc thù:
+                **RECALL > SEARCH_SIMILAR > COMPARE > LISTING > ANALYZE > SEARCH**.
+
 
                 ---
 
                 **Đầu ra:**
-                - Trả về đúng **một từ duy nhất** trong bốn loại:  
-                `"SEARCH"` hoặc `"LISTING"` hoặc `"COMPARE"` hoặc `"ANALYZE"`.
+                - Trả về đúng **một từ duy nhất**:  
+                  "SEARCH" hoặc "LISTING" hoặc "COMPARE" hoặc "ANALYZE" hoặc "SEARCH_SIMILAR" hoặc "RECALL".
                 - Không giải thích, không dấu câu, không xuống dòng.
+
 
                 ---
 
@@ -289,14 +389,14 @@ def main():
 
 
                 intent_resp = client.chat.completions.create(
-                    model=OPENAI_MODEL_NORMAL,
+                    model=OPENAI_MODEL_ADVANCED,
                     messages=[{"role": "system", "content": intent_prompt}],
                     temperature=0,
                 )
                 intent = intent_resp.choices[0].message.content.strip().upper()
 
-                # === SEARCH ===
-                if "SEARCH" in intent:
+                # === SEARCH MỚI ===
+                if intent == "SEARCH":
                     loading_box.markdown(
                         """
                         <div style='text-align:left;'>
@@ -325,13 +425,134 @@ def main():
                     save_chat_record(user_input, answer, chosen_passages)
                     threading.Thread(target=enrich_last_chat_record, daemon=True).start()
 
+                # === SEARCH_SIMILAR: tìm thêm căn tương tự dựa vào history ===
+                elif intent == "SEARCH_SIMILAR":
+                    loading_box.markdown(
+                        """
+                        <div style='text-align:left;'>
+                            <div style='background-color:#fff3cd;
+                                        display:inline-block; padding:10px 14px;
+                                        border-radius:12px; margin:4px 0;
+                                        max-width:70%; color:#333;'>
+                                <b>Tư vấn viên:</b> 💭 Bạn hãy đợi tôi chút, tôi sẽ tìm thêm các căn tương tự cho bạn nha...
+                            </div>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+
+                    history_data = load_chat_history(limit=1)
+                    # Dùng LLM sinh câu truy vấn mới dựa trên lần search gần nhất
+                    similar_query = rewrite_similar_query(
+                                    client,
+                                    user_input,
+                                    history_data,
+                                    st.session_state.chat_ui
+                                )
+
+
+
+                    hybrid_result = asyncio.run(hybrid.search(user_query=similar_query, top_k=top_k))
+                    graph_records = hybrid_result["graph_records"]
+                    graph_ids = hybrid_result["graph_ids"]
+                    vector_passages = hybrid_result["vector_passages"]
+
+                    graph_id_map = build_id_map_from_graph_records(graph_records)
+                    chosen_passages = select_topN_by_priority(
+                        graph_ids, vector_passages, vclient, graph_id_map, fill_limit=limit_ids
+                    )
+                    synthesis_payload = build_synthesis_input(chosen_passages, graph_id_map)
+
+                    # Trả lời theo câu hỏi hiện tại, nhưng dựa trên kết quả similar_query
+                    answer = llm_summarize_answer(client, user_input, synth_rule, synthesis_payload, OPENAI_MODEL_NORMAL)
+                    save_chat_record(user_input, answer, chosen_passages)
+                    threading.Thread(target=enrich_last_chat_record, daemon=True).start()
+                
+                # === RECALL: nhắc lại thông tin một hoặc nhiều căn đã tư vấn trước đó ===
+                elif intent == "RECALL":
+                    import re
+
+                    history_data = load_chat_history(limit=1)
+                    if not history_data:
+                        answer = (
+                            "Hiện tại tôi chưa có dữ liệu tư vấn nào trước đó trong hệ thống, "
+                            "nên chưa thể nhắc lại thông tin căn mà bạn muốn. "
+                            "Bạn hãy thử yêu cầu tìm nhà một lần nữa nhé."
+                        )
+                    else:
+                        last = history_data[-1]
+                        prev_answer = last.get("answer", "") or ""
+
+                        # Tìm TẤT CẢ số căn user yêu cầu (ví dụ: căn 1, căn số 2, căn thứ 3, ...)
+                        # Ví dụ câu: "Nhắc lại căn số 2 với căn số 3"
+                        matches = re.findall(r"căn\s*(số|thứ)?\s*(\d+)", user_input.lower())
+                        idx_list = []
+                        for _, num in matches:
+                            try:
+                                idx_list.append(int(num))
+                            except Exception:
+                                pass
+
+                        # Loại trùng + giữ thứ tự tăng dần
+                        idx_list = sorted(set(idx_list))
+
+                        if not idx_list:
+                            # Không bắt được số căn cụ thể → trả lại toàn bộ câu trả lời cũ
+                            answer = (
+                                "Đây là các căn tôi đã tư vấn gần nhất cho bạn trước đó:\n\n"
+                                f"{prev_answer}"
+                            )
+                        else:
+                            blocks = []
+                            not_found = []
+
+                            for idx in idx_list:
+                                # Cắt block "Căn số idx: ..." trong ANSWER cũ
+                                pattern = rf"(Căn số {idx}:[\s\S]*?)(?=\n\s*Căn số \d+:|$)"
+                                m2 = re.search(pattern, prev_answer)
+                                if m2:
+                                    can_text = m2.group(1).strip()
+                                    blocks.append(can_text)
+                                else:
+                                    not_found.append(idx)
+
+                            if blocks:
+                                if len(idx_list) == 1:
+                                    # Chỉ 1 căn
+                                    answer = (
+                                        f"Đây là thông tin chi tiết **căn số {idx_list[0]}** tôi đã tư vấn cho bạn trước đó:\n\n"
+                                        + "\n\n".join(blocks)
+                                    )
+                                else:
+                                    # Nhiều căn
+                                    danh_sach = ", ".join(str(i) for i in idx_list)
+                                    answer = (
+                                        f"Đây là thông tin chi tiết các **căn số {danh_sach}** tôi đã tư vấn cho bạn trước đó:\n\n"
+                                        + "\n\n".join(blocks)
+                                    )
+                                if not_found:
+                                    answer += (
+                                        "\n\n(Tôi không tách riêng được thông tin của một số căn: "
+                                        + ", ".join(str(i) for i in not_found)
+                                        + " trong lần tư vấn gần nhất.)"
+                                    )
+                            else:
+                                # Không tách được block nào → fallback
+                                answer = (
+                                    "Tôi không tách riêng được thông tin các căn bạn yêu cầu trong lần tư vấn gần nhất.\n"
+                                    "Tuy nhiên, dưới đây là toàn bộ nội dung tôi đã tư vấn hôm đó:\n\n"
+                                    f"{prev_answer}"
+                                )
+
+
+
                 else:
                     # === CHAT / LISTING / COMPARE / ANALYZE ===
-                    history_data = load_chat_history(limit=10)
+                    history_data = load_chat_history(limit=1)
 
                     # 1 Lấy ngữ cảnh hội thoại gần nhất (session)
                     session_history = ""
-                    for msg in st.session_state.chat_ui[-6:]:
+                    for msg in st.session_state.chat_ui[-10:]:
                         role = "Khách hàng" if msg["role"] == "user" else "Tư vấn viên"
                         session_history += f"{role}: {msg['content']}\n"
 
@@ -372,7 +593,7 @@ def main():
                                         continue
                                     viet_group = group_names.get(group, group)
                                     vietmap_context += f"  {viet_group}:\n"
-                                    for n in items[:2]:  # chỉ lấy 2 địa điểm gần nhất mỗi nhóm
+                                    for n in items[:3]:
                                         name = n.get("name", "")
                                         dist = n.get("distance_km", "")
                                         if name:
@@ -446,15 +667,13 @@ def main():
                     - Nếu thiếu dữ liệu ở nhóm nào, hãy nói rõ: “chưa có dữ liệu về ... quanh căn này”.
                     """
 
-
-
-
                     resp = client.chat.completions.create(
                         model=model,
                         messages=[{"role": "system", "content": advisor_prompt}],
                         temperature=0.7,
                     )
                     answer = resp.choices[0].message.content.strip()
+                    
 
                 # === HIỂN THỊ TRẢ LỜI
                 loading_box.empty()

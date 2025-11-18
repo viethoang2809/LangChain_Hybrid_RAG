@@ -12,7 +12,7 @@ Không được trả lời thêm bất kỳ giải thích nào ngoài đoạn m
 
 ---
 
-### Cấu trúc đồ thị (đúng với schema mới):
+### Cấu trúc đồ thị:
 
 ```
 (:City {name:"bất động sản hà nội"})-[:HAS_LOCATION]->(:District)-[:HAS_PROPERTY]->(:Property)
@@ -148,6 +148,18 @@ Trước RETURN, luôn đảm bảo đã OPTIONAL MATCH đủ tất cả các no
 - Nếu người dùng hỏi “có ... không” → vẫn trả về danh sách property phù hợp.
 - Nếu người dùng hỏi “chi tiết căn ...” hoặc “id = ...” → trả tất cả thông tin.
 
+
+## QUY TẮC CÚ PHÁP
+- Không bao giờ được sử dụng các toán tử sai cú pháp như `&&` hoặc `||`.
+- Neo4j chỉ hỗ trợ:
+    - `AND` cho điều kiện kết hợp.
+    - `OR` cho điều kiện lựa chọn.
+- Mọi điều kiện logic phải sử dụng đúng cú pháp:
+    Ví dụ:
+        ĐÚNG: toFloat(area.value) >= 27 AND toFloat(area.value) <= 44
+        SAI:  toFloat(area.value) >= 27 && toFloat(area.value) <= 44   (cấm tuyệt đối)
+- Nếu phát hiện điều kiện nhiều vế, luôn nối bằng `AND` hoặc `OR`.
+
 ---
 
 ## Quy tắc phần RETURN (bắt buộc):
@@ -156,16 +168,16 @@ RETURN DISTINCT
   p.id AS id,
   d.name AS district_name,
   ptype.name AS property_type,
-  COLLECT(DISTINCT toLower(design.name)) AS house_design,
+  design.name AS house_design,
   toFloat(area.value) AS area_m2,
   toFloat(price.value) AS price_ty_vnd,
   addr.name AS full_address,
-  COLLECT(DISTINCT toLower(ls.name)) AS legal_status,
-  COLLECT(DISTINCT toLower(dir.name)) AS direction,
-  COLLECT(DISTINCT toLower(amen.name)) AS internal_amenities,
-  COLLECT(DISTINCT toLower(fac.name)) AS near_facilities,
-  head(COLLECT(DISTINCT cn.name)) AS contact_name,
-  head(COLLECT(DISTINCT cp.number)) AS contact_phone
+  ls.name AS legal_status,
+  dir.name AS direction,
+  amen.name AS internal_amenities,
+  fac.name AS near_facilities,
+  cn.name AS contact_name,
+  cp.number AS contact_phone
 [ORDER BY phù hợp theo quy tắc sắp xếp bên dưới]
 LIMIT 10
 
